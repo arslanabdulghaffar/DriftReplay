@@ -3,6 +3,18 @@
   "reviewDate": "2026-10-11",
   "base": "0659e16936f4af63f7b5bd2220fecbafe8c1a17b",
   "branch": "phase/02-deterministic-analysis",
+  "implementationPublication": {
+    "sha": "5bbea6876925f7e5ae2efc85edb1e6420d6339a0",
+    "treeSha": "5781496ac2caade89785b115a1fb7fde864d58fc",
+    "remoteFileCount": 121,
+    "remoteTreeAndShaMatch": true,
+    "mainUnchanged": "0659e16936f4af63f7b5bd2220fecbafe8c1a17b",
+    "stagedAudit": { "files": 50, "bytes": 380528, "findings": [] },
+    "ciRunId": 38094631298,
+    "ciConclusion": "success",
+    "ciUrl": "https://github.com/arslanabdulghaffar/DriftReplay/actions/runs/38094631298",
+    "allJobStepsSucceeded": true
+  },
   "fixtureIntegrity": {
     "artifacts": [
       {
