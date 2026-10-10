@@ -1,6 +1,6 @@
 # Supported scope
 
-Phase 1 validates a single reviewed MercuryPay synthetic fixture. Its contracts use OpenAPI
+The preserved Phase 1 validator checks one reviewed MercuryPay synthetic fixture. Its contracts use OpenAPI
 3.0.3 JSON with inline object, string, and integer schemas; required fields, bounded integer
 amounts, fixed currency/status enums, email annotation, and explicit additional-property rejection.
 They contain one POST operation each and success/validation-error response descriptions.
@@ -23,9 +23,16 @@ are unsupported. An email format annotation does not contact or verify an email 
 | UI proof chain           | Future evidence requirements, not a persisted investigation |
 
 STRUCTURAL_BREAK, MATCHED_USAGE, POTENTIAL_IMPACT, REPRODUCED_FAILURE, PATCH_VERIFIED,
-UNVERIFIED, and NOT_APPLICABLE have distinct types. No active analysis/replay label is issued
-by this phase. Core schemas cannot represent an executed runtime attestation. The admission
+UNVERIFIED, and NOT_APPLICABLE have distinct types. The Phase 1 foundation guard still admits
+no active analysis/replay claim. Core schemas cannot represent an executed runtime attestation. The admission
 guard refuses claims that need later capabilities, even if caller-authored references look valid.
+
+Phase 2 adds a separate local analyzer and recomputation-based evidence predicate. Supported
+structural changes and lexical matches can justify conditional `POTENTIAL_IMPACT`; they cannot
+justify runtime failure or patch verification. Read the [OpenAPI matrix](openapi-support-matrix.md),
+[AST patterns](typescript-analysis-patterns.md), [evidence policy](analysis-evidence-policy.md),
+and [operational limits](phase-2-operational-limits.md). The static dashboard does not ingest
+these local reports or scan arbitrary repositories.
 
 Static fixture test success does not demonstrate baseline PASS / changed FAIL / patched PASS.
 It does not establish actual-provider behavior, automatic repair, complete API support,

@@ -1,4 +1,4 @@
-name: Local foundation checks
+name: Local foundation and deterministic analysis checks
 
 on:
   push:
@@ -39,6 +39,10 @@ jobs:
         run: corepack pnpm test
       - name: Explicit fixture validation gate
         run: corepack pnpm test:fixtures
+      - name: Explicit deterministic analysis and security gate
+        run: corepack pnpm test:analysis
+      - name: Actual local analysis CLI
+        run: corepack pnpm analyze:fixture
       - name: Production static build
         run: corepack pnpm build
       - name: Local HTTP smoke checks

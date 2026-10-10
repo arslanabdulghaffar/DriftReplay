@@ -75,3 +75,17 @@ compatibility conclusion or project license choice is made in Phase 1.
 - [Pinned setup-node definition](https://github.com/actions/setup-node/blob/820762786026740c76f36085b0efc47a31fe5020/action.yml)
 
 Release/action HTML pages were reviewed; no GitHub API call was made and neither action ran.
+
+## Phase 2 additive dependency decision
+
+The preceding section records Phase 1 dependency selection. Phase 1 was subsequently published
+with successful hosted Actions; see its publication receipt. Phase 2 adds one private workspace
+package, `@driftreplay/analysis@0.2.0`, using the same existing TypeScript **5.9.3** (Apache-2.0)
+and Zod **4.6.5** (MIT) pins at runtime. No new external package version, binary, installation
+hook or framework is added. Native Node TypeScript stripping runs authored analyzer code;
+the compiler API parses captured source as data. The lockfile adds only the workspace importer.
+
+The oasdiff documentation was evaluated, but no binary was installed or executed. There is no
+fabricated checksum or release pin for an unused tool. [ADR 0002](adr/0002-deterministic-analysis.md)
+records the intentionally reduced comparator choice. Phase 2 actual advisory/inventory results
+and remaining project-license decision are recorded in its completion report.

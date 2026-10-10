@@ -1,0 +1,16 @@
+{
+  "name": "@driftreplay/analysis",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/analysis.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "typescript": "5.9.3",
+    "zod": "4.6.5"
+  }
+}

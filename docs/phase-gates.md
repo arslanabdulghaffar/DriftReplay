@@ -1,6 +1,8 @@
 # Phase authorization and dependency gates
 
-Only Phase 1 is authorized. Completion recommends review; it does not authorize Phase 2.
+Phase 1 is published. Phase 2 is explicitly authorized on `phase/02-deterministic-analysis`
+from reviewed main `0659e16936f4af63f7b5bd2220fecbafe8c1a17b`. Completion recommends
+Phase 3 review; it does not authorize Phase 3 implementation or a merge to main.
 
 | Phase | Work and acceptance boundary                                                                                           |
 | ----- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -16,14 +18,22 @@ Only Phase 1 is authorized. Completion recommends review; it does not authorize 
 | 9     | Explicitly approved deployment/publication with actual smoke tests, costs and license decision                         |
 | 10    | Evidence-led narrow expansion ADR before implementation                                                                |
 
-## Phase 2 prerequisites
+## Phase 2 decision and gates
 
-Review the Phase 1 report, exact dependency selection, fixture artifacts/digests, admission-policy
-limitations, and static validator coverage. Select an OpenAPI diff adapter in a separate reviewed
-dependency decision; none is installed now. Define support and unknown outcomes before implementing
-ingestion or AST mapping. Decide source allowlists and safe resource bounds. Continue using real
-pre-Git tree digests until Git is explicitly authorized; never invent commit identities.
+The reviewed baseline, byte-pinned fixture and admission policy remain preserved. The adapter
+decision is [ADR 0002](adr/0002-deterministic-analysis.md); the strict subset, AST patterns,
+local resource limits and evidence predicates are documented separately. Both local validation
+and branch GitHub Actions must pass before a completion claim. Runtime proof remains Phase 4+.
 
-External services, Git initialization, repository access, model keys, remote runners, PR writing,
-and deployment each remain outside this phase. Every future phase requires its own authorization,
+Normal publication of the authorized phase branch is allowed. Product GitHub integration,
+external services, model keys, remote runners, PR writing and deployment remain excluded.
+Every future phase requires its own authorization,
 changed-file inventory, actual commands/results, limitations, and a go/no-go decision.
+
+## Phase 3 review prerequisites
+
+Review the Phase 2 report, pinned branch and honest unknown outcomes. Before durable coordination,
+approve a storage/workflow ADR covering idempotency keys, immutable artifact references,
+transaction boundaries, retries, cancellation, retention, costs and failure recovery. Specify
+tests for duplicate delivery, crash/restart, partial writes and stale authorization. No database,
+scheduler, account, cloud resource or replay runner is authorized by this document.

@@ -11,8 +11,9 @@ const boundaries = [
   },
   {
     capability: "Contract diff and code mapping",
-    scope: "Later phase",
-    detail: "No analyzer findings or consumer usage graph are presented as real results.",
+    scope: "Local CLI available",
+    detail:
+      "Phase 2 produces deterministic local reports with exact source citations. This static dashboard does not run or display live analyses.",
   },
   {
     capability: "Durable workflows and storage",

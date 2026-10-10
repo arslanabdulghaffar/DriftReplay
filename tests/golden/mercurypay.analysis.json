@@ -1,0 +1,243 @@
+{
+  "assessments": [
+    {
+      "deltaId": "ededbe868ed823dfbbad97b822aa65518e0710d3c9b52a2cb44d823e3e005d55",
+      "reason": "Supported structural change joined to exact method/path usage; conditional static impact only.",
+      "status": "POTENTIAL_IMPACT"
+    }
+  ],
+  "correspondences": [
+    {
+      "baseDigest": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+      "basePointer": "/paths/~1v1~1charges/post",
+      "candidateDigest": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+      "candidatePointer": "/paths/~1v2~1payments/post",
+      "id": "synthetic-operation-migration",
+      "kind": "operation",
+      "mappingDigest": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+      "provenance": "curated"
+    },
+    {
+      "baseDigest": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+      "basePointer": "/paths/~1v1~1charges/post/requestBody/content/application~1json/schema/properties/customer_email",
+      "candidateDigest": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+      "candidatePointer": "/paths/~1v2~1payments/post/requestBody/content/application~1json/schema/properties/customer/properties/email",
+      "id": "synthetic-customer-email-migration",
+      "kind": "request-property",
+      "mappingDigest": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+      "provenance": "curated"
+    }
+  ],
+  "deltas": [
+    {
+      "baseDigest": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+      "candidateDigest": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+      "compatibility": "breaking",
+      "id": "ededbe868ed823dfbbad97b822aa65518e0710d3c9b52a2cb44d823e3e005d55",
+      "kind": "operation-removed",
+      "method": "POST",
+      "oldPointer": "/paths/~1v1~1charges/post",
+      "path": "/v1/charges",
+      "rationale": "This operation is absent from the candidate contract. Contract omission does not prove a live endpoint was retired or renamed.",
+      "ruleId": "openapi.operation-removed.v1",
+      "support": "supported"
+    },
+    {
+      "baseDigest": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+      "candidateDigest": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+      "compatibility": "nonbreaking",
+      "id": "6af07b6d2f66e88c9cd6f1c25e07a36fe54898a9420dcbf81c8ac38581201a1e",
+      "kind": "operation-added",
+      "method": "POST",
+      "newPointer": "/paths/~1v2~1payments/post",
+      "path": "/v2/payments",
+      "rationale": "A new operation is declared. Its addition establishes no semantic correspondence with any removed operation.",
+      "ruleId": "openapi.operation-added.v1",
+      "support": "supported"
+    }
+  ],
+  "engine": {
+    "name": "driftreplay-openapi-subset",
+    "typescript": "5.9.3",
+    "version": "0.2.0"
+  },
+  "evidence": [
+    {
+      "id": "0612c78ee799f197bba537da0b43d9e1e2d8e6f85ff2b884405043a824ccf36b",
+      "kind": "usage",
+      "proof": "static-analysis-only",
+      "provenance": "observed",
+      "snapshotIds": ["2829d40912e5a979b27f5bce5b431822e285ed573cceae03a76603800a31b53c"],
+      "subjectId": "e33700fe3732ba69602ec8dbe36947b640bd0f848968b207b7a1a1dd6c29c2a0"
+    },
+    {
+      "id": "4e1876ec156d18f2b9c9c410bca1c3802586084cc89c1ef527d1a102ff08d531",
+      "kind": "curated",
+      "proof": "static-analysis-only",
+      "provenance": "curated",
+      "snapshotIds": [
+        "a631b175a7b3937822b950bdc27ce469da28a8a207f62af310462dda6b77ddeb",
+        "d75f659f54401e23135dea2fd6213246c0da04da3e1739123469a782c9f56b2f",
+        "08c57ae9afd14dbd2fd43da33425fa7811060908a01581c474b4df9c4eace691"
+      ],
+      "subjectId": "synthetic-customer-email-migration"
+    },
+    {
+      "id": "781d7d62a2f77d03251c1a9efd39609d62bc7db0861f0d37eec72b49e1e92ca6",
+      "kind": "structural",
+      "proof": "static-analysis-only",
+      "provenance": "observed",
+      "snapshotIds": [
+        "a631b175a7b3937822b950bdc27ce469da28a8a207f62af310462dda6b77ddeb",
+        "d75f659f54401e23135dea2fd6213246c0da04da3e1739123469a782c9f56b2f"
+      ],
+      "subjectId": "6af07b6d2f66e88c9cd6f1c25e07a36fe54898a9420dcbf81c8ac38581201a1e"
+    },
+    {
+      "id": "7944678a5efa131b6232a81b2d5db138281576a04d2d57db4684ccea80deefeb",
+      "kind": "structural",
+      "proof": "static-analysis-only",
+      "provenance": "observed",
+      "snapshotIds": [
+        "a631b175a7b3937822b950bdc27ce469da28a8a207f62af310462dda6b77ddeb",
+        "d75f659f54401e23135dea2fd6213246c0da04da3e1739123469a782c9f56b2f"
+      ],
+      "subjectId": "ededbe868ed823dfbbad97b822aa65518e0710d3c9b52a2cb44d823e3e005d55"
+    },
+    {
+      "id": "85f8a6b11f880fe21c0787f9e73c62c970856721ce46dccc16de05d84d7efb38",
+      "kind": "curated",
+      "proof": "static-analysis-only",
+      "provenance": "curated",
+      "snapshotIds": [
+        "a631b175a7b3937822b950bdc27ce469da28a8a207f62af310462dda6b77ddeb",
+        "d75f659f54401e23135dea2fd6213246c0da04da3e1739123469a782c9f56b2f",
+        "08c57ae9afd14dbd2fd43da33425fa7811060908a01581c474b4df9c4eace691"
+      ],
+      "subjectId": "synthetic-operation-migration"
+    }
+  ],
+  "links": [
+    {
+      "confidence": "direct",
+      "correspondenceIds": ["synthetic-operation-migration"],
+      "deltaId": "ededbe868ed823dfbbad97b822aa65518e0710d3c9b52a2cb44d823e3e005d55",
+      "evidenceIds": [
+        "0612c78ee799f197bba537da0b43d9e1e2d8e6f85ff2b884405043a824ccf36b",
+        "7944678a5efa131b6232a81b2d5db138281576a04d2d57db4684ccea80deefeb",
+        "85f8a6b11f880fe21c0787f9e73c62c970856721ce46dccc16de05d84d7efb38"
+      ],
+      "id": "51ca0f0c9b1cc7b5f30810b6bac362164e31800a1a13489442164cb9dea52743",
+      "limitations": [
+        "Exact method/path correspondence is conditional on this contract describing the selected consumer's intended provider.",
+        "Lexical construction/call does not prove execution, reachability, affected values, provider retirement, or runtime failure."
+      ],
+      "ruleId": "impact.exact-method-path.v1",
+      "status": "POTENTIAL_IMPACT",
+      "usageId": "e33700fe3732ba69602ec8dbe36947b640bd0f848968b207b7a1a1dd6c29c2a0"
+    }
+  ],
+  "modelInvocations": 0,
+  "policyHash": "a2a841e15fdb994cc4c47a1f7a4024ddc82d2c9e1cf1750cac233f3bb2220c09",
+  "policyId": "local-analysis-v2",
+  "repairExecuted": false,
+  "replayExecuted": false,
+  "runDigest": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+  "schemaVersion": "2",
+  "scope": {
+    "coverage": "explicit-files-only; lexical; no reachability proof",
+    "sourcePaths": ["apps/demo-shop/src/v1-adapter.ts"]
+  },
+  "snapshots": [
+    {
+      "byteLength": 1140,
+      "id": "08c57ae9afd14dbd2fd43da33425fa7811060908a01581c474b4df9c4eace691",
+      "mediaType": "application/json",
+      "originKind": "approved-local",
+      "path": "examples/fixtures/mercurypay/migration-ground-truth/mapping.json",
+      "role": "mapping",
+      "schemaVersion": "2",
+      "sha256": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+      "trustOrigin": "operator-selected-untrusted-content"
+    },
+    {
+      "byteLength": 2563,
+      "id": "a631b175a7b3937822b950bdc27ce469da28a8a207f62af310462dda6b77ddeb",
+      "mediaType": "application/json",
+      "originKind": "approved-local",
+      "path": "examples/fixtures/mercurypay/contracts/v1.openapi.json",
+      "role": "base-contract",
+      "schemaVersion": "2",
+      "sha256": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+      "trustOrigin": "operator-selected-untrusted-content"
+    },
+    {
+      "byteLength": 2847,
+      "id": "d75f659f54401e23135dea2fd6213246c0da04da3e1739123469a782c9f56b2f",
+      "mediaType": "application/json",
+      "originKind": "approved-local",
+      "path": "examples/fixtures/mercurypay/contracts/v2.openapi.json",
+      "role": "candidate-contract",
+      "schemaVersion": "2",
+      "sha256": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+      "trustOrigin": "operator-selected-untrusted-content"
+    },
+    {
+      "byteLength": 753,
+      "id": "2829d40912e5a979b27f5bce5b431822e285ed573cceae03a76603800a31b53c",
+      "mediaType": "text/typescript",
+      "originKind": "approved-local",
+      "path": "apps/demo-shop/src/v1-adapter.ts",
+      "role": "source",
+      "schemaVersion": "2",
+      "sha256": "4409d6c30a5c36e5b4a018b4391adcfe72e4cce63aa121dc55565beefed1d8d9",
+      "trustOrigin": "operator-selected-untrusted-content"
+    }
+  ],
+  "state": "ANALYSIS_ONLY",
+  "unresolved": [
+    {
+      "code": "ast.opaque-call.v1",
+      "filePath": "apps/demo-shop/src/v1-adapter.ts",
+      "message": "Call is outside the supported direct-fetch pattern; helper, alias, wrapper or SDK behavior is unresolved."
+    }
+  ],
+  "usages": [
+    {
+      "bodyProperties": ["amount", "currency", "customer_email"],
+      "execution": "not-executed",
+      "filePath": "apps/demo-shop/src/v1-adapter.ts",
+      "id": "e33700fe3732ba69602ec8dbe36947b640bd0f848968b207b7a1a1dd6c29c2a0",
+      "limitations": [
+        "Lexical syntax only: execution, network dispatch, reachability and business-flow use are unverified.",
+        "Imports, variables, aliases, wrappers and interprocedural data flow are not resolved.",
+        "A returned method/path/body object follows the declared construction convention; its use as an HTTP request is unverified."
+      ],
+      "location": {
+        "end": 595,
+        "endColumn": 24,
+        "endLine": 19,
+        "excerpt": "\"/v1/charges\"",
+        "start": 582,
+        "startColumn": 11,
+        "startLine": 19
+      },
+      "matchMethod": "ast-static-request-object",
+      "method": "POST",
+      "path": "/v1/charges",
+      "requestLocation": {
+        "end": 749,
+        "endColumn": 4,
+        "endLine": 22,
+        "excerpt": "{\n    method: \"POST\",\n    path: \"/v1/charges\",\n    headers: { \"content-type\": \"application/json\" },\n    body: { customer_email: input.email, amount: input.amountMinor, currency: input.currency },\n  }",
+        "start": 550,
+        "startColumn": 10,
+        "startLine": 17
+      },
+      "ruleId": "ast.returned-request-object.v1",
+      "sourceDigest": "4409d6c30a5c36e5b4a018b4391adcfe72e4cce63aa121dc55565beefed1d8d9",
+      "sourceSnapshotId": "2829d40912e5a979b27f5bce5b431822e285ed573cceae03a76603800a31b53c",
+      "symbol": "buildV1CheckoutRequest"
+    }
+  ]
+}

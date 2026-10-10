@@ -47,8 +47,12 @@ as a workaround for a blocked push.
 
 ## Current engineering boundary
 
-Phase 1 is a synthetic, model-off local foundation. No replay, agents, repair, GitHub App,
+Phase 1 is the published synthetic foundation. Phase 2 is explicitly authorized only on
+`phase/02-deterministic-analysis`: bounded local ingestion, deterministic comparison, lexical
+TypeScript evidence and conditional impact mapping. No replay, agents, repair, GitHub App,
 provider monitoring or production security capability may be represented as implemented.
+Phase 3 requires separate explicit authorization. Include `test:analysis` and `analyze:fixture`
+with the complete validation gates for Phase 2 and subsequent changes to the analyzer.
 MercuryPay is synthetic. Protect its fixed business input and oracle; do not change tests
 or fixture assertions merely to obtain a passing result.
 

@@ -1,11 +1,12 @@
 # DriftReplay
 
-Inspect a synthetic API migration and the evidence a future investigation must produce.
+Inspect a synthetic API migration and reproduce a bounded local contract-to-code analysis.
 
-**Phase 1 local foundation. MercuryPay is fictional and explicitly synthetic.**
-This project currently provides a static fixture explorer, versioned evidence schemas,
-static fixture validation, and an unmigrated checkout request adapter. It does not monitor
-providers, scan GitHub, run agents, reproduce regressions, generate patches, or verify repairs.
+**Phase 2 deterministic local analysis, with the published Phase 1 foundation preserved.**
+MercuryPay is fictional and explicitly synthetic. The local CLI compares supported OpenAPI
+contracts, cites actual TypeScript syntax and links conditional potential impacts. The dashboard
+remains a static fixture explorer. Provider monitoring, GitHub ingestion, runtime replay,
+model execution, patch generation and repair verification remain future work.
 
 ## Quickstart
 
@@ -17,6 +18,8 @@ are unavailable, install/setup is a separate owner decision. The package manager
 Set-Location A:\DriftReplay
 corepack pnpm install --frozen-lockfile --ignore-scripts
 corepack pnpm check
+corepack pnpm test:analysis
+corepack pnpm analyze:fixture
 corepack pnpm preview
 ```
 
@@ -29,6 +32,15 @@ Available pages: overview `/`, fixture explorer `/fixtures/mercurypay`, evidence
 `/evidence`, and current boundaries `/status`. All data is bundled from local workspace
 imports; the static export is suitable for a later reviewed deployment. No deployment
 has been authorized or performed.
+
+`analyze:fixture` performs real local analysis and writes versioned JSON and Markdown under
+ignored `.local/phase-2/`. It finds removed `POST /v1/charges`, added `POST /v2/payments`,
+the unchanged adapter's line 19 literal, and one conditional potential-impact link. The
+curated mapping remains separate evidence. Replay and repair are explicitly unexecuted.
+For other explicitly selected local files and the pure API, see
+[operational limits](docs/phase-2-operational-limits.md),
+[OpenAPI support](docs/openapi-support-matrix.md), and
+[evidence policy](docs/analysis-evidence-policy.md).
 
 ## What the fixture contains
 
@@ -50,17 +62,19 @@ not provider authenticity or execution results. No Git SHA is fabricated.
 
 ## Local commands
 
-| Command after `corepack pnpm` | Purpose                                              |
-| ----------------------------- | ---------------------------------------------------- |
-| `typecheck`                   | Strict checks across every workspace and root tests  |
-| `lint`                        | Current ESLint and TypeScript rules                  |
-| `format:check`                | Formatting consistency                               |
-| `test`                        | Core, adapter, and static fixture tests              |
-| `test:fixtures`               | Explicit fixture and deliberate-negative gate        |
-| `build`                       | Next.js production static export                     |
-| `smoke`                       | Temporary loopback HTTP checks; shuts down afterward |
-| `check`                       | All gates above in order                             |
-| `preview`                     | Loopback-only static preview of the build            |
+| Command after `corepack pnpm` | Purpose                                               |
+| ----------------------------- | ----------------------------------------------------- |
+| `typecheck`                   | Strict checks across every workspace and root tests   |
+| `lint`                        | Current ESLint and TypeScript rules                   |
+| `format:check`                | Formatting consistency                                |
+| `test`                        | Core, adapter, and static fixture tests               |
+| `test:fixtures`               | Explicit fixture and deliberate-negative gate         |
+| `test:analysis`               | Analysis unit, golden, integration and security gates |
+| `analyze:fixture`             | Actual bounded local MercuryPay analysis and reports  |
+| `build`                       | Next.js production static export                      |
+| `smoke`                       | Temporary loopback HTTP checks; shuts down afterward  |
+| `check`                       | All gates above in order                              |
+| `preview`                     | Loopback-only static preview of the build             |
 
 Formatting hashed fixture files changes their identities. Review intentional fixture edits,
 then recalculate the manifest as an explicit fixture-authoring action. Never update digests
@@ -71,6 +85,7 @@ inside validation tests to make them pass.
 - `apps/web`: static dashboard foundation, with local styles and system fonts.
 - `apps/demo-shop`: pure v1 request adapter and independent business types.
 - `packages/core`: Zod schemas, admission guard, and separately exported Node digest utilities.
+- `packages/analysis`: local ingestion, strict OpenAPI comparator, TypeScript parser, evidence policy and CLI.
 - `examples/fixtures/mercurypay`: JSON artifacts plus fixture-specific validation.
 - `tests/fixtures`: negative and positive static invariants.
 - `scripts`: authored local build wrapper, preview/smoke, and dependency inventory helpers.
@@ -85,10 +100,13 @@ Read [supported scope](docs/supported-scope.md), [security boundaries](docs/secu
 [dependency decisions](docs/dependencies.md). Actual validation and limitations are in
 [the Phase 1 report](PHASE_1_REPORT.md).
 
-The eventual product hypothesis is a reviewable chain from pinned upstream change to
-consumer usage, an attributable failure, and a bounded verified repair. Those capabilities
-are future work. A synthetic demonstration cannot establish adoption or real-provider fidelity.
+The eventual product hypothesis extends the current static contract-to-code chain with
+an attributable runtime failure and bounded verified repair. Those execution capabilities
+remain future work. A synthetic demonstration cannot establish adoption or real-provider fidelity.
 
-The local CI definition has read-only permissions and immutable action references. It has
-not run on GitHub. The project is not a Git repository. License selection remains unresolved
-pending an owner decision and dependency review; no open-source license grant is asserted yet.
+Phase 1 is published on GitHub; Actions succeeded on reviewed commit
+`0659e16936f4af63f7b5bd2220fecbafe8c1a17b`. See the
+[publication receipt](docs/phase-1-publication.md). The CI definition has read-only permissions
+and immutable action references. Phase 2 local analysis is confined to its separately
+authorized branch. License selection remains unresolved pending an owner decision and dependency
+review; no open-source license grant is asserted yet.

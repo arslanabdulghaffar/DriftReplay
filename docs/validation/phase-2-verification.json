@@ -1,0 +1,141 @@
+{
+  "kind": "actual-phase-2-validation-records; static-analysis-not-runtime-proof",
+  "reviewDate": "2026-10-11",
+  "base": "0659e16936f4af63f7b5bd2220fecbafe8c1a17b",
+  "branch": "phase/02-deterministic-analysis",
+  "fixtureIntegrity": {
+    "artifacts": [
+      {
+        "path": "examples/fixtures/mercurypay/contracts/v1.openapi.json",
+        "before": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+        "after": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+        "manifest": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+        "unchanged": true
+      },
+      {
+        "path": "examples/fixtures/mercurypay/contracts/v2.openapi.json",
+        "before": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+        "after": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+        "manifest": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+        "unchanged": true
+      },
+      {
+        "path": "examples/fixtures/mercurypay/provider-mocks/v1.json",
+        "before": "b6957a1a6e350c374baed8bfcac21bba22b1f8ed1fdb195604ffd85d19d65b9c",
+        "after": "b6957a1a6e350c374baed8bfcac21bba22b1f8ed1fdb195604ffd85d19d65b9c",
+        "manifest": "b6957a1a6e350c374baed8bfcac21bba22b1f8ed1fdb195604ffd85d19d65b9c",
+        "unchanged": true
+      },
+      {
+        "path": "examples/fixtures/mercurypay/provider-mocks/v2.json",
+        "before": "da12aa35e5118cc8a95dfe446fb16b47a2100fe1d688976599e08610a12282cb",
+        "after": "da12aa35e5118cc8a95dfe446fb16b47a2100fe1d688976599e08610a12282cb",
+        "manifest": "da12aa35e5118cc8a95dfe446fb16b47a2100fe1d688976599e08610a12282cb",
+        "unchanged": true
+      },
+      {
+        "path": "examples/fixtures/mercurypay/business-cases/checkout.json",
+        "before": "e884ef0aa00575d71bfa100850f7d69380ad9a595d0d052dc9bbfd09cbd41b17",
+        "after": "e884ef0aa00575d71bfa100850f7d69380ad9a595d0d052dc9bbfd09cbd41b17",
+        "manifest": "e884ef0aa00575d71bfa100850f7d69380ad9a595d0d052dc9bbfd09cbd41b17",
+        "unchanged": true
+      },
+      {
+        "path": "examples/fixtures/mercurypay/business-cases/assertions.json",
+        "before": "3302eb961ac63612c6699cee89ae0d7fbc1508ebbfeddd6be26591186ee632a0",
+        "after": "3302eb961ac63612c6699cee89ae0d7fbc1508ebbfeddd6be26591186ee632a0",
+        "manifest": "3302eb961ac63612c6699cee89ae0d7fbc1508ebbfeddd6be26591186ee632a0",
+        "unchanged": true
+      },
+      {
+        "path": "examples/fixtures/mercurypay/migration-ground-truth/mapping.json",
+        "before": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+        "after": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+        "manifest": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+        "unchanged": true
+      }
+    ],
+    "adapter": {
+      "path": "apps/demo-shop/src/v1-adapter.ts",
+      "before": "4409d6c30a5c36e5b4a018b4391adcfe72e4cce63aa121dc55565beefed1d8d9",
+      "after": "4409d6c30a5c36e5b4a018b4391adcfe72e4cce63aa121dc55565beefed1d8d9",
+      "unchanged": true
+    },
+    "treeDigest": "6fa099c93680d9a1fec24a1cfb1c5a7d7009069adebfa023e6288c208a458b75"
+  },
+  "dependencyMetadata": [
+    {
+      "name": "typescript",
+      "version": "5.9.3",
+      "license": "Apache-2.0",
+      "lifecycle": []
+    },
+    {
+      "name": "zod",
+      "version": "4.6.5",
+      "license": "MIT",
+      "lifecycle": []
+    }
+  ],
+  "reproducibility": {
+    "equal": true,
+    "first": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+    "second": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+    "jsonBytes": 8732,
+    "elapsedMs": 83,
+    "rssBytes": 122019840,
+    "snapshots": [
+      {
+        "path": "examples/fixtures/mercurypay/migration-ground-truth/mapping.json",
+        "sha256": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f",
+        "bytes": 1140
+      },
+      {
+        "path": "examples/fixtures/mercurypay/contracts/v1.openapi.json",
+        "sha256": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164",
+        "bytes": 2563
+      },
+      {
+        "path": "examples/fixtures/mercurypay/contracts/v2.openapi.json",
+        "sha256": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e",
+        "bytes": 2847
+      },
+      {
+        "path": "apps/demo-shop/src/v1-adapter.ts",
+        "sha256": "4409d6c30a5c36e5b4a018b4391adcfe72e4cce63aa121dc55565beefed1d8d9",
+        "bytes": 753
+      }
+    ],
+    "location": {
+      "start": 582,
+      "end": 595,
+      "startLine": 19,
+      "startColumn": 11,
+      "endLine": 19,
+      "endColumn": 24,
+      "excerpt": "\"/v1/charges\""
+    }
+  },
+  "commands": [
+    {
+      "command": "corepack pnpm install --frozen-lockfile --ignore-scripts; corepack pnpm audit --json",
+      "exitCode": 0,
+      "output": "Scope: all 6 workspace projects\n? Verifying lockfile against supply-chain policies (242 entries)...\nLockfile is up to date, resolution step is skipped\nAlready up to date\n\n✓ Lockfile passes supply-chain policies (242 entries in 1.9s)\nDone in 2.4s using pnpm v11.25.0\n{\n  \"advisories\": {},\n  \"metadata\": {\n    \"vulnerabilities\": {\n      \"info\": 0,\n      \"low\": 0,\n      \"moderate\": 0,\n      \"high\": 0,\n      \"critical\": 0\n    },\n    \"dependencies\": 26,\n    \"devDependencies\": 146,\n    \"optionalDependencies\": 97,\n    \"totalDependencies\": 242\n  }\n}\n"
+    },
+    {
+      "command": "corepack pnpm test:analysis; corepack pnpm analyze:fixture",
+      "exitCode": 0,
+      "output": "$ vitest run packages/analysis tests/integration tests/security tests/golden\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  10 passed (10)\n      Tests  327 passed (327)\n   Start at  08:16:20\n   Duration  2.42s (tests 42%, import 38%, transform 19%, worker 1%)\n\n$ node packages/analysis/src/cli.ts --fixture\n{\"state\":\"ANALYSIS_ONLY\",\"runDigest\":\"1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c\",\"outputs\":[\".local/phase-2/analysis.json\",\".local/phase-2/analysis.md\"],\"deltas\":2,\"usages\":1,\"links\":1,\"processingMetadata\":{\"elapsedMs\":505,\"resultBytes\":8732,\"scope\":\"nondeterministic measurement; excluded from logical digest\"},\"replayExecuted\":false,\"repairExecuted\":false,\"modelInvocations\":0,\"unresolved\":[{\"code\":\"ast.opaque-call.v1\",\"message\":\"Call is outside the supported direct-fetch pattern; helper, alias, wrapper or SDK behavior is unresolved.\",\"filePath\":\"apps/demo-shop/src/v1-adapter.ts\"}]}\n"
+    },
+    {
+      "command": "all-files secret/privacy/binary scan; git diff --check",
+      "exitCode": 0,
+      "output": "{\n  \"scope\": \"all tracked and nonignored untracked files\",\n  \"fileCount\": 119,\n  \"totalBytes\": 856470,\n  \"findings\": []\n}\n"
+    }
+  ],
+  "notes": [
+    "Measurements describe this local sample; not a performance benchmark or hard RSS guarantee.",
+    "Golden expectations came from executed static analyses; fixture bytes were never rewritten.",
+    "Full check passed: 404 tests across 14 files, explicit fixture gate 37/37, TypeScript/lint/format/build and six smoke checks. Final report records CI separately."
+  ]
+}

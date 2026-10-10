@@ -12,6 +12,7 @@ export default defineConfig([
     "**/out/**",
     "**/next-env.d.ts",
     "docs/validation/**",
+    ".local/**",
   ]),
   { languageOptions: { globals: { ...globals.node, ...globals.browser } } },
   { rules: { "@typescript-eslint/no-explicit-any": "error" } },

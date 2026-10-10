@@ -16,6 +16,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:fixtures": "vitest run tests/fixtures",
+    "test:analysis": "vitest run packages/analysis tests/integration tests/security tests/golden",
+    "analyze:fixture": "node packages/analysis/src/cli.ts --fixture",
     "build": "corepack pnpm --filter @driftreplay/web build",
     "smoke": "node scripts/smoke.mjs",
     "preview": "node scripts/preview.mjs",

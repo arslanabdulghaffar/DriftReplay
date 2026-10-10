@@ -1,0 +1,237 @@
+[
+  {
+    "name": "request enum narrows",
+    "direction": "request",
+    "before": {
+      "type": "string",
+      "enum": ["a", "b"]
+    },
+    "after": {
+      "type": "string",
+      "enum": ["a"]
+    },
+    "compatibility": "breaking",
+    "expected": [
+      {
+        "ruleId": "openapi.request-value-constraints-changed.v1",
+        "kind": "request-value-constraints-changed",
+        "compatibility": "breaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "rationale": "Some previously declared primitive request values are excluded by the supported constraints."
+      }
+    ]
+  },
+  {
+    "name": "request enum widens",
+    "direction": "request",
+    "before": {
+      "type": "string",
+      "enum": ["a"]
+    },
+    "after": {
+      "type": "string",
+      "enum": ["a", "b"]
+    },
+    "compatibility": "nonbreaking",
+    "expected": [
+      {
+        "ruleId": "openapi.request-value-constraints-changed.v1",
+        "kind": "request-value-constraints-changed",
+        "compatibility": "nonbreaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "rationale": "All previously declared primitive request values remain accepted by the supported constraints."
+      }
+    ]
+  },
+  {
+    "name": "response enum narrows",
+    "direction": "response",
+    "before": {
+      "type": "string",
+      "enum": ["a", "b"]
+    },
+    "after": {
+      "type": "string",
+      "enum": ["a"]
+    },
+    "compatibility": "nonbreaking",
+    "expected": [
+      {
+        "ruleId": "openapi.response-value-constraints-changed.v1",
+        "kind": "response-value-constraints-changed",
+        "compatibility": "nonbreaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "rationale": "The declared primitive response domain remains within the old consumer contract."
+      }
+    ]
+  },
+  {
+    "name": "response enum widens",
+    "direction": "response",
+    "before": {
+      "type": "string",
+      "enum": ["a"]
+    },
+    "after": {
+      "type": "string",
+      "enum": ["a", "b"]
+    },
+    "compatibility": "breaking",
+    "expected": [
+      {
+        "ruleId": "openapi.response-value-constraints-changed.v1",
+        "kind": "response-value-constraints-changed",
+        "compatibility": "breaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "rationale": "The declared primitive response domain permits values outside the old consumer contract."
+      }
+    ]
+  },
+  {
+    "name": "request minimum tightens",
+    "direction": "request",
+    "before": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "after": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "compatibility": "breaking",
+    "expected": [
+      {
+        "ruleId": "openapi.request-value-constraints-changed.v1",
+        "kind": "request-value-constraints-changed",
+        "compatibility": "breaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "rationale": "Some previously declared primitive request values are excluded by the supported constraints."
+      }
+    ]
+  },
+  {
+    "name": "request minimum loosens",
+    "direction": "request",
+    "before": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "after": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "compatibility": "nonbreaking",
+    "expected": [
+      {
+        "ruleId": "openapi.request-value-constraints-changed.v1",
+        "kind": "request-value-constraints-changed",
+        "compatibility": "nonbreaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "rationale": "All previously declared primitive request values remain accepted by the supported constraints."
+      }
+    ]
+  },
+  {
+    "name": "response minimum tightens",
+    "direction": "response",
+    "before": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "after": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "compatibility": "nonbreaking",
+    "expected": [
+      {
+        "ruleId": "openapi.response-value-constraints-changed.v1",
+        "kind": "response-value-constraints-changed",
+        "compatibility": "nonbreaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "rationale": "The declared primitive response domain remains within the old consumer contract."
+      }
+    ]
+  },
+  {
+    "name": "response minimum loosens",
+    "direction": "response",
+    "before": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "after": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "compatibility": "breaking",
+    "expected": [
+      {
+        "ruleId": "openapi.response-value-constraints-changed.v1",
+        "kind": "response-value-constraints-changed",
+        "compatibility": "breaking",
+        "support": "supported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/responses/200/content/application~1json/schema",
+        "rationale": "The declared primitive response domain permits values outside the old consumer contract."
+      }
+    ]
+  },
+  {
+    "name": "opaque format narrowing",
+    "direction": "request",
+    "before": {
+      "type": "string",
+      "format": "email"
+    },
+    "after": {
+      "type": "string",
+      "format": "email",
+      "minLength": 3
+    },
+    "compatibility": "unknown",
+    "expected": [
+      {
+        "ruleId": "openapi.request-value-constraints-changed.v1",
+        "kind": "request-value-constraints-changed",
+        "compatibility": "unknown",
+        "support": "unsupported",
+        "method": "POST",
+        "path": "/charge",
+        "oldPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "newPointer": "/paths/~1charge/post/requestBody/content/application~1json/schema",
+        "rationale": "Primitive bounds or enum constraints change, but the unchanged opaque email format prevents demonstrating a compatible or incompatible value witness."
+      }
+    ]
+  }
+]
