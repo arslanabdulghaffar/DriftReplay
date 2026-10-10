@@ -5,22 +5,25 @@ Branch: `main`. Publication date: 2026-10-10.
 
 ## Status and authorization
 
-Phase 1 is COMPLETE and its fresh local publication gates PASS. The owner explicitly authorized Git initialization,
+Phase 1 is COMPLETE and its fresh local publication gates PASS. Initial GitHub publication is
+BLOCKED by missing local Git HTTPS authentication. The owner explicitly authorized Git initialization,
 committing the completed Phase 1 foundation and a normal initial push. Phase 2, deployment,
 releases, permission changes, force-push and automatic merges remain unauthorized.
 
 The existing [Phase 1 completion report](../PHASE_1_REPORT.md) remains the historical record of
 the local implementation. This document records the separately authorized publication.
 
-Implementation commit SHA and GitHub commit URL will be recorded in the publication receipt
-after creating the commit. A receipt references the implementation commit rather than claiming
-to contain its own Git hash.
+Implementation commit SHA: `20c5edff0d4653384a82bb47178f2ace69614376`.
+Commit subject: `feat: add DriftReplay Phase 1 foundation and publishing workflow`.
+GitHub commit URL: unavailable because this commit was not pushed. The repository URL above is
+valid; no hosted commit or successful publication is claimed. This receipt is a separate local
+documentation commit and references the implementation commit rather than claiming its own hash.
 
 ## Remote and local preflight
 
 - `git ls-remote --symref https://github.com/arslanabdulghaffar/DriftReplay.git` succeeded with no refs.
 - GitHub repository metadata identified the intended public repository, size 0, default branch
-  `main`, and push permission for the connected account. Emptiness will be rechecked before push.
+  `main`, and push permission for the connected account. Emptiness was rechecked immediately before push.
 - The local directory had 80 source/documentation/evidence files and no `.git` directory.
 - Git was initialized on `main`; `origin` points to the exact authorized HTTPS repository.
 - No global Git author identity was configured. Repository-local identity uses the verified
@@ -72,6 +75,9 @@ git diff --cached --check
 | Fresh registry advisory query     | Zero known advisories returned                                                    |
 | Final publication candidate audit | 83 text files; zero configured findings; preserved source/fixture/lockfile hashes |
 
+The repeated `git diff --cached --check` passed after removing the single trailing blank line
+described above. All 83 staged files were ordinary text blobs; no symlink or submodule was staged.
+
 `check` expands to workspace TypeScript, lint, formatting, unit tests, explicit fixture tests,
 production build and local HTTP smoke checks. Local raw publication command outputs stay under
 ignored `.local/`. Replay, model calls, real providers and Phase 2 analysis were NOT RUN.
@@ -104,8 +110,25 @@ without separate authorization. Publishing never authorizes the next phase.
 
 ## Verification receipt and recommendation
 
-Remote commit equality, intended GitHub files, Actions status and final working-tree state are
-pending the authorized push. No GitHub Actions success is claimed yet.
+The remote remained empty immediately before the attempted initial push. The actual command was:
 
-Recommendation: GO for the authorized initial publication and GO for Phase 2 review only.
-Phase 2 implementation is not authorized by this publication.
+```powershell
+git -c credential.interactive=never push --set-upstream origin main
+```
+
+It exited 128: Git could not obtain a password because interactive prompting was disabled.
+No usable HTTPS credential was available to the local Git transport. The separate GitHub
+connector's repository permission does not authenticate this transport. No credential was
+invented, exposed or copied between authentication mechanisms, and no alternate publishing
+method was attempted. The workflow's authorization-problem stop rule was honored.
+
+No remote commit or source files were published. Remote SHA equality cannot be established;
+GitHub Actions did not run for the unpublished commit. The local working tree was clean after
+the implementation commit; this receipt is committed separately, with final status checked in
+the handoff. Ignored dependencies/builds and original evidence remain on disk.
+
+Recommendation: **NO-GO for publication until local Git authentication is configured**.
+The Phase 1 foundation remains GO for review. Authenticate the local Git client to GitHub,
+then explicitly resume publication; first recheck remote emptiness/history and the current
+working tree. Do not install credentials or broaden permissions automatically. Phase 2
+implementation is not authorized by this publication.
