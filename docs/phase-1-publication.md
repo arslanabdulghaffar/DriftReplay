@@ -5,8 +5,8 @@ Branch: `main`. Publication date: 2026-10-10.
 
 ## Status and authorization
 
-Phase 1 is COMPLETE and its fresh local publication gates PASS. Initial GitHub publication is
-BLOCKED by missing local Git HTTPS authentication. The owner explicitly authorized Git initialization,
+Phase 1 is COMPLETE and its fresh local publication gates PASS. Initial GitHub publication has
+SUCCEEDED after the owner completed local Git authentication. The owner explicitly authorized Git initialization,
 committing the completed Phase 1 foundation and a normal initial push. Phase 2, deployment,
 releases, permission changes, force-push and automatic merges remain unauthorized.
 
@@ -15,9 +15,10 @@ the local implementation. This document records the separately authorized public
 
 Implementation commit SHA: `20c5edff0d4653384a82bb47178f2ace69614376`.
 Commit subject: `feat: add DriftReplay Phase 1 foundation and publishing workflow`.
-GitHub commit URL: unavailable because this commit was not pushed. The repository URL above is
-valid; no hosted commit or successful publication is claimed. This receipt is a separate local
-documentation commit and references the implementation commit rather than claiming its own hash.
+GitHub implementation commit: [20c5edff0d4653384a82bb47178f2ace69614376](https://github.com/arslanabdulghaffar/DriftReplay/commit/20c5edff0d4653384a82bb47178f2ace69614376).
+Initial published HEAD: [089a0835b7f8ff58bff9d20854c590c06b373fb4](https://github.com/arslanabdulghaffar/DriftReplay/commit/089a0835b7f8ff58bff9d20854c590c06b373fb4).
+This updated receipt is a subsequent documentation commit; it identifies the implementation
+and verified initial publication commits rather than claiming to contain its own Git hash.
 
 ## Remote and local preflight
 
@@ -108,7 +109,7 @@ labeled WIP branch. Secrets, unsafe content, authorization problems and remote c
 publication. No force-push, history rewriting, automatic merge, release or deployment is allowed
 without separate authorization. Publishing never authorizes the next phase.
 
-## Verification receipt and recommendation
+## Authentication history
 
 The remote remained empty immediately before the attempted initial push. The actual command was:
 
@@ -116,19 +117,44 @@ The remote remained empty immediately before the attempted initial push. The act
 git -c credential.interactive=never push --set-upstream origin main
 ```
 
-It exited 128: Git could not obtain a password because interactive prompting was disabled.
-No usable HTTPS credential was available to the local Git transport. The separate GitHub
-connector's repository permission does not authenticate this transport. No credential was
-invented, exposed or copied between authentication mechanisms, and no alternate publishing
-method was attempted. The workflow's authorization-problem stop rule was honored.
+The first attempt exited 128 because no usable HTTPS credential was available to the local
+Git transport. The workflow's authorization-problem stop rule was honored. The owner then
+completed Git Credential Manager authentication and requested continuation. No credential was
+invented, exposed or copied between authentication mechanisms. No alternate publishing method,
+force-push, history rewrite, deployment or release was used.
 
-No remote commit or source files were published. Remote SHA equality cannot be established;
-GitHub Actions did not run for the unpublished commit. The local working tree was clean after
-the implementation commit; this receipt is committed separately, with final status checked in
-the handoff. Ignored dependencies/builds and original evidence remain on disk.
+## Verification receipt and recommendation
 
-Recommendation: **NO-GO for publication until local Git authentication is configured**.
-The Phase 1 foundation remains GO for review. Authenticate the local Git client to GitHub,
-then explicitly resume publication; first recheck remote emptiness/history and the current
-working tree. Do not install credentials or broaden permissions automatically. Phase 2
+On resumption, the account was registered, the working tree was clean at the expected commit,
+`origin` was unchanged, and the remote still had no refs. The 83-file content audit passed again
+with preserved source/fixture/lockfile hashes. An independent review scanned both committed
+trees and found no credential/private-path/binary/symlink findings.
+
+The same normal push command then succeeded and established tracking of `origin/main`.
+`git ls-remote origin refs/heads/main` matched local HEAD exactly:
+
+```text
+089a0835b7f8ff58bff9d20854c590c06b373fb4
+```
+
+GitHub's commit and recursive tree APIs independently confirmed the same commit and tree:
+
+```text
+4b5e79bf4cf0504c6e2cebb1da4198a421522db2
+```
+
+The remote tree was not truncated, contained all 83 intended files and had zero path differences
+from the local committed tree. This verifies the source, fixtures, tests, lockfile, completion
+report, publication report and permanent AGENTS.md rules. The local working tree was clean and
+`main` tracked `origin/main` after this push. Ignored dependencies/builds and original local
+evidence remain on disk and were not published.
+
+GitHub Actions: [Local foundation checks, run 38025602159](https://github.com/arslanabdulghaffar/DriftReplay/actions/runs/38025602159)
+was triggered by the initial push at the SHA above and completed with **success**. Its foundation
+job passed dependency installation, TypeScript, lint, formatting, unit/fixture tests, the explicit
+fixture gate, production build and HTTP smoke checks. Both the run conclusion and individual
+step conclusions were retrieved from GitHub; this is actual hosted CI evidence.
+
+Recommendation: **GO — initial publication verified; Phase 1 ready for review**.
+The final receipt commit and its CI status are verified separately in the handoff. Phase 2
 implementation is not authorized by this publication.
