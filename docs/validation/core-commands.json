@@ -1,0 +1,112 @@
+{
+  "scope": "Phase 1 core subagent shell commands; apply_patch edits are file operations, not shell commands",
+  "commands": [
+    {
+      "command": "Get-ChildItem -Force; Get-Content -LiteralPath '<LOCAL_ATTACHMENT_DIRECTORY>\\Pasted text.txt'",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only: root had no displayed entries at time of inspection; read complete user-pasted Phase 1 authorization. No writes."
+    },
+    {
+      "command": "corepack pnpm exec vitest run packages/core",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Vitest 5.0.3: 3 files passed, 37 tests passed; 2.80 seconds. pnpm reported lockfile up to date."
+    },
+    {
+      "command": "corepack pnpm --filter @driftreplay/core typecheck",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "TypeScript tsc --noEmit passed. pnpm reported lockfile up to date."
+    },
+    {
+      "command": "corepack pnpm exec prettier --write packages/core/src docs/validation/core-commands.json",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Formatted the seven authored core source/test files. Before formatting, pnpm auto-installed the parent's concurrently updated root dependencies: +31/-193 packages; @eslint/js 10.0.1, @next/eslint-plugin-next 16.4.0, eslint 10.12.0, globals 17.13.0, typescript-eslint 8.71.1. It removed eslint 9.39.4 and eslint-config-next 16.4.0. This unintended subagent install/network side effect was immediately disclosed to parent; no dependency build scripts appeared in output. Remaining subagent checks use local binaries directly."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\vitest.cmd run packages/core",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Vitest 5.0.3: 3 files passed, 40 tests passed; 392ms. Includes immutability and Windows path-negative cases."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\tsc.cmd --noEmit --project packages/core/tsconfig.json",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Strict core TypeScript check passed with no diagnostics."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\eslint.cmd packages/core/src",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 1,
+      "outcome": "One no-control-regex error in the artifact path validation regex. Fixed underlying implementation by checking control character code points without a control-character regex; no rule suppressed."
+    },
+    {
+      "command": "Get-Content -LiteralPath eslint.config.mjs; Get-Content -LiteralPath packages/core/package.json; Get-Content -LiteralPath packages/core/tsconfig.json",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only inspection of current lint configuration and parent-owned core package settings while waiting for lint. Confirmed expected public exports and strict TypeScript project."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\prettier.cmd --write packages/core/src/schemas.ts",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Formatted the corrected path validator (111ms); used local binary to avoid implicit pnpm installation."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\vitest.cmd run packages/core",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Final Vitest 5.0.3 focused check: 3 files passed, 40 tests passed; 346ms. No replay or runtime-provider tests."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\tsc.cmd --noEmit --project packages/core/tsconfig.json",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Final strict TypeScript core check passed with no diagnostics."
+    },
+    {
+      "command": ".\\node_modules\\.bin\\eslint.cmd packages/core/src",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Final core lint passed with no diagnostics after fixing the no-control-regex failure."
+    }
+  ],
+  "independentReviewCommands": [
+    {
+      "command": "rg --files .github scripts apps/web examples tests -g '!node_modules' -g '!.next' -g '!tsconfig.tsbuildinfo'; Get-Content -LiteralPath pnpm-workspace.yaml; Get-Content -LiteralPath package.json; Get-Content -LiteralPath .github/workflows/ci.yml",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only inventory and review of root dependency policy and CI. No execution of project helpers."
+    },
+    {
+      "command": "$reviewPaths = @('scripts/next.mjs','scripts/preview.mjs','scripts/smoke.mjs','scripts/dependency-inventory.mjs','apps/web/next.config.mjs','apps/web/package.json','apps/web/components/fixture-data.ts','examples/fixtures/mercurypay/validation.ts'); foreach ($reviewPath in $reviewPaths) { Write-Output \"FILE: $reviewPath\"; $reviewLine = 0; Get-Content -LiteralPath $reviewPath | ForEach-Object { $reviewLine++; '{0,4}: {1}' -f $reviewLine, $_ } }",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only numbered review of authored scripts, static configuration, and fixed fixture loader/validator."
+    },
+    {
+      "command": "$reviewPaths = @('apps/web/app/page.tsx','apps/web/app/fixtures/mercurypay/page.tsx','apps/web/app/evidence/page.tsx','apps/web/app/status/page.tsx','apps/web/app/layout.tsx','apps/web/components/ui.tsx','apps/web/components/navigation.tsx','apps/web/app/error.tsx','apps/web/app/not-found.tsx'); foreach ($reviewPath in $reviewPaths) { Write-Output \"FILE: $reviewPath\"; $reviewLine = 0; Get-Content -LiteralPath $reviewPath | ForEach-Object { $reviewLine++; '{0,4}: {1}' -f $reviewLine, $_ } }",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only numbered review of all page claims and common UI rendering/navigation."
+    },
+    {
+      "command": "rg -n 'fetch\\(|https?://|eval\\(|new Function|dangerouslySetInnerHTML|child_process|process\\.env|require\\(|import\\(' apps/web scripts examples/fixtures/mercurypay -g '!next-env.d.ts' -g '!tsconfig.tsbuildinfo' -g '!out/**' -g '!.next/**'; Get-Content -LiteralPath docs/security-boundaries.md; Get-Content -LiteralPath docs/supported-scope.md; Get-Content -LiteralPath docs/validation/core-commands.json",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only pattern check and documentation read. The initial exclusion patterns did not exclude nested generated out files, producing truncated generated-bundle output. The next command narrowed the search to authored directories."
+    },
+    {
+      "command": "rg -n 'fetch\\(|https?://|eval\\(|new Function|dangerouslySetInnerHTML|child_process|process\\.env|require\\(' apps/web/app apps/web/components scripts examples/fixtures/mercurypay -g '*.ts' -g '*.tsx' -g '*.mjs' -g '*.css' -g '*.json'; Get-Content -LiteralPath .env.example; Get-Content -LiteralPath .gitignore",
+      "workingDirectory": "A:\\DriftReplay",
+      "exitCode": 0,
+      "outcome": "Read-only authored-source check. Network references were local smoke/preview URLs or non-contacted .invalid fixture metadata. No active external app fetch or unsafe HTML rendering found. Environment example contains only comments."
+    }
+  ],
+  "independentReviewOutcome": "No material scoped findings in the reviewed final Phase 1 source. Source review only; no new tests, external calls, or code mutation. Only this command ledger was updated as explicitly requested.",
+  "tests": "Core final focused suite: 40 tests passed in 3 files; strict TypeScript and lint passed. No three-variant replay or later analysis performed.",
+  "publicationNote": "Local user/attachment paths use placeholders; session/chunk identifiers and duplicated external-document/tool-guidance read output were removed. Test/build outcomes are unchanged. Originals remain in ignored .local/publication."
+}

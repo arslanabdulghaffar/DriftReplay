@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+  - examples/fixtures/mercurypay
+
+saveExact: true
+engineStrict: true
+strictPeerDependencies: true
+strictDepBuilds: true
+allowBuilds: {}
+verifyDepsBeforeRun: false
+sideEffectsCache: false
+enableGlobalVirtualStore: false
+ignorePnpmfile: true

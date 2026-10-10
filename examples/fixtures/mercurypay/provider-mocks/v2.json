@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1",
+  "id": "mercurypay-synthetic-s2",
+  "synthetic": true,
+  "kind": "behavior-reference-data",
+  "execution": "not-started",
+  "contractId": "mercurypay-synthetic-contract-v2",
+  "requestValidation": "reject-any-schema-violation",
+  "route": { "method": "POST", "path": "/v2/payments" },
+  "requestExample": {
+    "customer": { "email": "shopper@example.invalid" },
+    "amount": 2599,
+    "currency": "USD"
+  },
+  "success": {
+    "httpStatus": 201,
+    "body": {
+      "transactionId": "syn_txn_checkout_001",
+      "status": "succeeded",
+      "amount": 2599,
+      "currency": "USD"
+    }
+  },
+  "invalidRequest": { "httpStatus": 400, "code": "SYNTHETIC_INVALID_REQUEST" },
+  "unknownRoute": { "httpStatus": 404, "code": "SYNTHETIC_ROUTE_NOT_FOUND" },
+  "retiredRoutes": [
+    {
+      "method": "POST",
+      "path": "/v1/charges",
+      "httpStatus": 410,
+      "code": "SYNTHETIC_VERSION_RETIRED"
+    }
+  ],
+  "rejectedExamples": [
+    {
+      "reason": "A flat customer_email cannot replace required customer.email",
+      "body": { "customer_email": "shopper@example.invalid", "amount": 2599, "currency": "USD" },
+      "httpStatus": 400
+    }
+  ]
+}

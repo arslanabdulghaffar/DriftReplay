@@ -1,0 +1,45 @@
+name: Local foundation checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CI: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+      COREPACK_DEFAULT_TO_LATEST: "0"
+    steps:
+      - name: Read source without retaining checkout credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+      - name: Select the reviewed Node runtime
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.21.0"
+          package-manager-cache: false
+      - name: Install pinned packages without lifecycle scripts
+        run: corepack pnpm install --frozen-lockfile --ignore-scripts
+      - name: Strict TypeScript checks
+        run: corepack pnpm typecheck
+      - name: Lint
+        run: corepack pnpm lint
+      - name: Formatting
+        run: corepack pnpm format:check
+      - name: Unit and fixture tests
+        run: corepack pnpm test
+      - name: Explicit fixture validation gate
+        run: corepack pnpm test:fixtures
+      - name: Production static build
+        run: corepack pnpm build
+      - name: Local HTTP smoke checks
+        run: corepack pnpm smoke

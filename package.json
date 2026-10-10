@@ -1,0 +1,38 @@
+{
+  "name": "driftreplay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "pnpm": "11.25.0"
+  },
+  "scripts": {
+    "dev": "corepack pnpm --filter @driftreplay/web dev",
+    "typecheck": "corepack pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:fixtures": "vitest run tests/fixtures",
+    "build": "corepack pnpm --filter @driftreplay/web build",
+    "smoke": "node scripts/smoke.mjs",
+    "preview": "node scripts/preview.mjs",
+    "check": "corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm build && corepack pnpm smoke"
+  },
+  "devDependencies": {
+    "@driftreplay/core": "workspace:0.1.0",
+    "@driftreplay/demo-shop": "workspace:0.1.0",
+    "@driftreplay/fixtures": "workspace:0.1.0",
+    "@types/node": "24.10.0",
+    "@eslint/js": "10.0.1",
+    "eslint": "10.12.0",
+    "globals": "17.13.0",
+    "prettier": "3.9.9",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.4",
+    "vitest": "5.0.3"
+  }
+}

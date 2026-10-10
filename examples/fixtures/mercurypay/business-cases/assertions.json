@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1",
+  "synthetic": true,
+  "kind": "business-oracle-reference-data",
+  "execution": "not-started",
+  "assertions": [
+    {
+      "id": "checkout.succeeded",
+      "description": "The checkout outcome is succeeded.",
+      "subject": "checkout.status",
+      "operator": "equals",
+      "expected": "succeeded"
+    },
+    {
+      "id": "checkout.transaction-identity",
+      "description": "The checkout outcome has a nonempty transaction identity.",
+      "subject": "checkout.transactionId",
+      "operator": "nonempty-string"
+    },
+    {
+      "id": "checkout.amount-preserved",
+      "description": "The checkout outcome preserves the input amount in minor units.",
+      "subject": "checkout.amountMinor",
+      "operator": "equals-input",
+      "inputField": "amountMinor"
+    },
+    {
+      "id": "checkout.currency-preserved",
+      "description": "The checkout outcome preserves the input currency.",
+      "subject": "checkout.currency",
+      "operator": "equals-input",
+      "inputField": "currency"
+    },
+    {
+      "id": "checkout.customer-preserved",
+      "description": "The provider-independent customer identity in the planned harness equals the business input; wire payload extraction is version-specific.",
+      "subject": "checkout.customerEmail",
+      "operator": "equals-input",
+      "inputField": "email"
+    }
+  ]
+}

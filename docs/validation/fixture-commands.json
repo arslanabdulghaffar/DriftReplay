@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1",
+  "agent": "phase1_fixtures",
+  "scope": "Static fixture data, validator, pure v1 adapter, and tests; no three-variant replay.",
+  "commands": [
+    {
+      "id": "F01",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "Get-Content -Raw '<LOCAL_ATTACHMENT_DIRECTORY>\\Pasted text.txt'",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "F02",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "corepack pnpm exec prettier --write \"examples/fixtures/mercurypay/contracts/*.json\" \"examples/fixtures/mercurypay/provider-mocks/*.json\" \"examples/fixtures/mercurypay/business-cases/*.json\" \"examples/fixtures/mercurypay/migration-ground-truth/*.json\" \"examples/fixtures/mercurypay/validation.ts\" \"examples/fixtures/mercurypay/README.md\" \"apps/demo-shop/src/*.ts\" \"tests/fixtures/*.ts\"",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "Scope: all 5 workspace projects\n✓ Lockfile passes supply-chain policies (verified 41s ago)\nLockfile is up to date, resolution step is skipped\nAlready up to date\n\nDone in 871ms using pnpm v11.25.0\nexamples/fixtures/mercurypay/contracts/v1.openapi.json 48ms\nexamples/fixtures/mercurypay/contracts/v2.openapi.json 6ms\nexamples/fixtures/mercurypay/provider-mocks/v1.json 3ms\nexamples/fixtures/mercurypay/provider-mocks/v2.json 4ms\nexamples/fixtures/mercurypay/business-cases/assertions.json 2ms\nexamples/fixtures/mercurypay/business-cases/checkout.json 1ms (unchanged)\nexamples/fixtures/mercurypay/migration-ground-truth/mapping.json 2ms\nexamples/fixtures/mercurypay/validation.ts 131ms\nexamples/fixtures/mercurypay/README.md 52ms (unchanged)\napps/demo-shop/src/checkout.ts 8ms\napps/demo-shop/src/index.ts 2ms\napps/demo-shop/src/v1-adapter.ts 3ms\ntests/fixtures/mercurypay.test.ts 32ms\n"
+    },
+    {
+      "id": "F03",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "@'\nimport { readFileSync, writeFileSync } from 'node:fs';\nimport { createHash } from 'node:crypto';\nimport { resolve } from 'node:path';\nconst root = resolve('examples/fixtures/mercurypay');\nconst hash = (data) => createHash('sha256').update(data).digest('hex');\nconst artifact = (id, path) => ({id, path, sha256: hash(readFileSync(resolve(root, path)))});\nconst contracts = {v1: artifact('mercurypay-synthetic-contract-v1', 'contracts/v1.openapi.json'), v2: artifact('mercurypay-synthetic-contract-v2', 'contracts/v2.openapi.json')};\nconst mocks = {v1: artifact('mercurypay-synthetic-s1', 'provider-mocks/v1.json'), v2: artifact('mercurypay-synthetic-s2', 'provider-mocks/v2.json')};\nconst businessCase = artifact('synthetic-checkout-001', 'business-cases/checkout.json');\nconst assertions = artifact('synthetic-checkout-oracle', 'business-cases/assertions.json');\nconst migrationMapping = artifact('synthetic-migration-map', 'migration-ground-truth/mapping.json');\nconst refs = [...Object.values(contracts), ...Object.values(mocks), businessCase, assertions, migrationMapping];\nconst manifest = {\n schemaVersion:'1', fixtureId:'mercurypay-synthetic-checkout', synthetic:true, provenance:'curated-synthetic-ground-truth', description:'MercuryPay is synthetic. These are curated foundation artifacts; no replay or verified repair has occurred.', money:{unit:'minor', currency:'USD'}, contracts, mocks, businessCase, assertions, migrationMapping,\n assertionIds:['checkout.succeeded','checkout.transaction-identity','checkout.amount-preserved','checkout.currency-preserved','checkout.customer-preserved'],\n treeDigest:hash([...refs].sort((a,b)=>a.path < b.path ? -1 : a.path > b.path ? 1 : 0).map(ref=>`${ref.path}:${ref.sha256}\\n`).join('')),\n digestPolicy:'sha256-raw-bytes;tree=sha256(sorted-path:sha256\\\\n)',\n testPolicy:{phase:'foundation-only',execution:'not-started',immutableInputs:refs.map(ref=>ref.path),patchAllowedPaths:['apps/demo-shop/src/v1-adapter.ts']},\n phase4RequiredPins:['harness','runtime','dependencies','networkPolicy']\n};\nwriteFileSync(resolve(root, 'fixture-manifest.json'), JSON.stringify(manifest,null,2)+'\\n', 'utf8');\nconsole.log(JSON.stringify({treeDigest:manifest.treeDigest, artifacts:refs},null,2));\n'@ | node --input-type=module",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "{\n  \"treeDigest\": \"2714b64c9ab4e1fe6ab2ae636808226f239bd3d5c6a8defdc963f540ed5cc91b\",\n  \"artifacts\": [\n    {\n      \"id\": \"mercurypay-synthetic-contract-v1\",\n      \"path\": \"contracts/v1.openapi.json\",\n      \"sha256\": \"d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164\"\n    },\n    {\n      \"id\": \"mercurypay-synthetic-contract-v2\",\n      \"path\": \"contracts/v2.openapi.json\",\n      \"sha256\": \"8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e\"\n    },\n    {\n      \"id\": \"mercurypay-synthetic-s1\",\n      \"path\": \"provider-mocks/v1.json\",\n      \"sha256\": \"b6957a1a6e350c374baed8bfcac21bba22b1f8ed1fdb195604ffd85d19d65b9c\"\n    },\n    {\n      \"id\": \"mercurypay-synthetic-s2\",\n      \"path\": \"provider-mocks/v2.json\",\n      \"sha256\": \"da12aa35e5118cc8a95dfe446fb16b47a2100fe1d688976599e08610a12282cb\"\n    },\n    {\n      \"id\": \"synthetic-checkout-001\",\n      \"path\": \"business-cases/checkout.json\",\n      \"sha256\": \"e884ef0aa00575d71bfa100850f7d69380ad9a595d0d052dc9bbfd09cbd41b17\"\n    },\n    {\n      \"id\": \"synthetic-checkout-oracle\",\n      \"path\": \"business-cases/assertions.json\",\n      \"sha256\": \"3302eb961ac63612c6699cee89ae0d7fbc1508ebbfeddd6be26591186ee632a0\"\n    },\n    {\n      \"id\": \"synthetic-migration-map\",\n      \"path\": \"migration-ground-truth/mapping.json\",\n      \"sha256\": \"91b9f7863be1b17c72dc0bf4abda78bdb5d95391004d99d27580828749820c98\"\n    }\n  ]\n}\n"
+    },
+    {
+      "id": "F04",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "corepack pnpm test:fixtures",
+      "exitCode": 1,
+      "outcome": "FAIL",
+      "output": "[ERR_PNPM_VERIFY_DEPS_BEFORE_RUN] opts3.currentPnpmfiles is not iterable\n\nRun \"pnpm install\"\n"
+    },
+    {
+      "id": "F05",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/vitest/vitest.mjs run tests/fixtures",
+      "exitCode": 1,
+      "outcome": "FAIL",
+      "output": "\n RUN  v5.0.3 A:/DriftReplay\n\n ❯ tests/fixtures/mercurypay.test.ts (37 tests | 1 failed) 114ms\n   ❯ MercuryPay synthetic fixture static conformance (28)\n     × rejects wrong declared artifact digest 8ms\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  tests/fixtures/mercurypay.test.ts > MercuryPay synthetic fixture static conformance > rejects wrong declared artifact digest\nTypeError: Cannot assign to read only property 'sha256' of object '#<Object>'\n ❯ tests/fixtures/mercurypay.test.ts:182:26\n    180|     const bundle = loadMercuryPayFixture();\n    181|     const changed = FixtureManifestSchema.parse(bundle.manifest);\n    182|     changed.contracts.v1.sha256 = \"0\".repeat(64);\n       |                          ^\n    183|     expectRejected({ ...bundle, manifest: changed }, \"digest\");\n    184|   });\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n\n Test Files  1 failed (1)\n      Tests  1 failed | 36 passed (37)\n   Start at  08:06:25\n   Duration  560ms (transform 36%, import 32%, tests 30%, worker 2%)\n\n"
+    },
+    {
+      "id": "F06",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/vitest/vitest.mjs run tests/fixtures",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  08:06:39\n   Duration  543ms (import 35%, transform 33%, tests 31%, worker 1%)\n\n"
+    },
+    {
+      "id": "F07",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.checks.json",
+      "exitCode": 1,
+      "outcome": "FAIL",
+      "output": "error TS5058: The specified path does not exist: 'tsconfig.checks.json'.\r\n"
+    },
+    {
+      "id": "F08",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "Get-Content -Raw package.json; rg --files -g 'tsconfig*.json' -g '!node_modules' -g '!apps/web/.next'",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "{\n  \"name\": \"driftreplay\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"packageManager\": \"pnpm@11.25.0\",\n  \"engines\": { \"node\": \">=24.21.0 <25\", \"pnpm\": \"11.25.0\" },\n  \"scripts\": {\n    \"dev\": \"corepack pnpm --filter @driftreplay/web dev\",\n    \"typecheck\": \"corepack pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit\",\n    \"lint\": \"eslint . --max-warnings 0\",\n    \"format\": \"prettier --write .\",\n    \"format:check\": \"prettier --check .\",\n    \"test\": \"vitest run\",\n    \"test:fixtures\": \"vitest run tests/fixtures\",\n    \"build\": \"corepack pnpm --filter @driftreplay/web build\",\n    \"smoke\": \"node scripts/smoke.mjs\",\n    \"preview\": \"node scripts/preview.mjs\",\n    \"check\": \"corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm build && corepack pnpm smoke\"\n  },\n  \"devDependencies\": {\n    \"@driftreplay/core\": \"workspace:0.1.0\",\n    \"@driftreplay/demo-shop\": \"workspace:0.1.0\",\n    \"@driftreplay/fixtures\": \"workspace:0.1.0\",\n    \"@types/node\": \"24.10.0\",\n    \"@eslint/js\": \"10.0.1\",\n    \"eslint\": \"10.12.0\",\n    \"globals\": \"17.13.0\",\n    \"prettier\": \"3.9.9\",\n    \"typescript\": \"5.9.3\",\n    \"typescript-eslint\": \"8.71.1\",\n    \"vite\": \"8.3.4\",\n    \"vitest\": \"5.0.3\"\n  }\n}\n\r\ntsconfig.tests.json\ntsconfig.base.json\npackages\\core\\tsconfig.json\napps\\web\\tsconfig.json\nexamples\\fixtures\\mercurypay\\tsconfig.json\napps\\demo-shop\\tsconfig.json\n"
+    },
+    {
+      "id": "F09",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "corepack pnpm test:fixtures",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "$ vitest run tests/fixtures\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  08:06:52\n   Duration  633ms (tests 38%, transform 33%, import 28%, worker 1%)\n\n"
+    },
+    {
+      "id": "F10",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p tsconfig.tests.json",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": ""
+    },
+    {
+      "id": "F11",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p examples/fixtures/mercurypay/tsconfig.json",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": ""
+    },
+    {
+      "id": "F12",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p apps/demo-shop/tsconfig.json",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": ""
+    },
+    {
+      "id": "F13",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/prettier/bin/prettier.cjs --write examples/fixtures/mercurypay/validation.ts examples/fixtures/mercurypay/fixture-manifest.json tests/fixtures/mercurypay.test.ts",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "examples/fixtures/mercurypay/validation.ts 139ms (unchanged)\nexamples/fixtures/mercurypay/fixture-manifest.json 15ms\ntests/fixtures/mercurypay.test.ts 38ms (unchanged)\n"
+    },
+    {
+      "id": "F14",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/eslint/bin/eslint.js examples/fixtures/mercurypay/validation.ts apps/demo-shop/src tests/fixtures --max-warnings 0",
+      "exitCode": 1,
+      "outcome": "FAIL",
+      "output": "\nA:\\DriftReplay\\examples\\fixtures\\mercurypay\\validation.ts\n  554:41  error  '_description' is defined but never used  @typescript-eslint/no-unused-vars\n\n✖ 1 problem (1 error, 0 warnings)\n\n"
+    },
+    {
+      "id": "F15",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/eslint/bin/eslint.js examples/fixtures/mercurypay/validation.ts apps/demo-shop/src tests/fixtures --max-warnings 0",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": ""
+    },
+    {
+      "id": "F16",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "corepack pnpm test:fixtures",
+      "exitCode": 0,
+      "outcome": "PASS",
+      "output": "$ vitest run tests/fixtures\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  08:07:24\n   Duration  503ms (transform 34%, tests 32%, import 32%, worker 1%)\n\n"
+    },
+    {
+      "id": "F17",
+      "workingDirectory": "A:\\DriftReplay",
+      "command": "node node_modules/prettier/bin/prettier.cjs --check examples/fixtures/mercurypay apps/demo-shop/src tests/fixtures",
+      "exitCode": 1,
+      "outcome": "FAIL",
+      "output": "Checking formatting...\n[warn] examples/fixtures/mercurypay/package.json\n[warn] Code style issues found in the above file. Run Prettier with --write to fix.\n"
+    }
+  ],
+  "limitations": [
+    "The PASS label in this ledger describes the command exit status, never baseline/changed/patched replay.",
+    "F07 used an incorrect guessed tsconfig filename; F10-F12 ran actual available configurations successfully.",
+    "F17's sole warning is parent-owned fixture package.json; parent will format it in the overall gate.",
+    "File creation and edits used apply_patch, within A:\\DriftReplay. No Git, cloud, model, production credential, container, or provider calls were made."
+  ],
+  "publicationNote": "Local user/attachment paths use placeholders; session/chunk identifiers and duplicated external-document/tool-guidance read output were removed. Test/build outcomes are unchanged. Originals remain in ignored .local/publication."
+}

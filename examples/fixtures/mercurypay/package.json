@@ -1,0 +1,24 @@
+{
+  "name": "@driftreplay/fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./manifest": "./fixture-manifest.json",
+    "./v1": "./contracts/v1.openapi.json",
+    "./v2": "./contracts/v2.openapi.json",
+    "./mock-v1": "./provider-mocks/v1.json",
+    "./mock-v2": "./provider-mocks/v2.json",
+    "./business-case": "./business-cases/checkout.json",
+    "./assertions": "./business-cases/assertions.json",
+    "./mapping": "./migration-ground-truth/mapping.json",
+    "./validation": "./validation.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@driftreplay/core": "workspace:0.1.0",
+    "zod": "4.6.5"
+  }
+}

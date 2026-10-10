@@ -1,0 +1,71 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MercuryPay (synthetic) v1",
+    "version": "1.0.0",
+    "description": "Curated synthetic fixture. No real provider or network service. Amount is integer USD minor units."
+  },
+  "servers": [{ "url": "https://mercurypay.invalid" }],
+  "paths": {
+    "/v1/charges": {
+      "post": {
+        "operationId": "createSyntheticCharge",
+        "summary": "Create a synthetic charge using the v1 flat email field",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["customer_email", "amount", "currency"],
+                "properties": {
+                  "customer_email": { "type": "string", "format": "email", "minLength": 3 },
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991,
+                    "description": "USD minor units (cents); a JavaScript safe integer."
+                  },
+                  "currency": { "type": "string", "enum": ["USD"] }
+                }
+              },
+              "example": {
+                "customer_email": "shopper@example.invalid",
+                "amount": 2599,
+                "currency": "USD"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Synthetic transaction created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["transactionId", "status", "amount", "currency"],
+                  "properties": {
+                    "transactionId": { "type": "string", "minLength": 1 },
+                    "status": { "type": "string", "enum": ["succeeded"] },
+                    "amount": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+                    "currency": { "type": "string", "enum": ["USD"] }
+                  }
+                },
+                "example": {
+                  "transactionId": "syn_txn_checkout_001",
+                  "status": "succeeded",
+                  "amount": 2599,
+                  "currency": "USD"
+                }
+              }
+            }
+          },
+          "400": { "description": "Request violates the synthetic request schema" }
+        }
+      }
+    }
+  }
+}

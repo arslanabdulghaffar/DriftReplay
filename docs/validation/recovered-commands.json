@@ -1,0 +1,19 @@
+{
+  "commands": [
+    {
+      "id": "tool-docs-01-recovered",
+      "commandAsRecorded": "\"<USER_HOME>\\\\.cache\\\\codex-runtimes\\\\codex-primary-runtime\\\\dependencies\\\\native\\\\powershell\\\\pwsh.exe\" -Command \"Get-Content -LiteralPath '<USER_HOME>\\\\.codex\\\\plugins\\\\cache\\\\openai-bundled\\\\computer-use\\\\26.1007.21434\\\\skills\\\\computer-use\\\\SKILL.md' -Raw\"",
+      "exitCode": 0,
+      "outcome": "PASS — read-only documentation extraction/read. Exact launcher command recovered from this chat's execution history; retained output is truncated.",
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "preflight-04-recovered",
+      "commandAsRecorded": "\"<USER_HOME>\\\\.cache\\\\codex-runtimes\\\\codex-primary-runtime\\\\dependencies\\\\native\\\\powershell\\\\pwsh.exe\" -Command '$phase1ReviewZip = [System.IO.Compression.ZipFile]::OpenRead('\"'<USER_HOME>\\\\Downloads\\\\DriftReplay_Phase_0_Review_and_Phase_1_Prompt.docx')\ntry {\n \"'$phase1ReviewStream = $phase1ReviewZip.GetEntry('\"'word/document.xml').Open()\n \"'$phase1ReviewSettings = [System.Xml.XmlReaderSettings]::new()\n $phase1ReviewSettings.DtdProcessing = [System.Xml.DtdProcessing]::Prohibit\n $phase1ReviewReader = [System.Xml.XmlReader]::Create($phase1ReviewStream,$phase1ReviewSettings)\n $phase1ReviewXml = [System.Xml.XmlDocument]::new()\n $phase1ReviewXml.Load($phase1ReviewReader)\n $phase1ReviewNs = [System.Xml.XmlNamespaceManager]::new($phase1ReviewXml.NameTable)\n $phase1ReviewNs.AddNamespace('\"'w','http://schemas.openxmlformats.org/wordprocessingml/2006/main')\n \"'$phase1ReviewXml.SelectNodes('\"'//w:body//w:p',\"'$phase1ReviewNs) | ForEach-Object { ($_.SelectNodes('\"'.//w:t',\"'$phase1ReviewNs) | ForEach-Object {$_.InnerText}) -join '\"'' }\n \"'$phase1ReviewReader.Dispose()\n $phase1ReviewStream.Dispose()\n} finally {$phase1ReviewZip.Dispose()}'",
+      "exitCode": 0,
+      "outcome": "PASS — read-only documentation extraction/read. Exact launcher command recovered from this chat's execution history; retained output is truncated.",
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    }
+  ],
+  "publicationNote": "Local user/attachment paths use placeholders; session/chunk identifiers and duplicated external-document/tool-guidance read output were removed. Test/build outcomes are unchanged. Originals remain in ignored .local/publication."
+}

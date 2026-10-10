@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1",
+  "fixtureId": "mercurypay-synthetic-checkout",
+  "synthetic": true,
+  "provenance": "curated-synthetic-ground-truth",
+  "description": "MercuryPay is synthetic. These are curated foundation artifacts; no replay or verified repair has occurred.",
+  "money": {
+    "unit": "minor",
+    "currency": "USD"
+  },
+  "contracts": {
+    "v1": {
+      "id": "mercurypay-synthetic-contract-v1",
+      "path": "contracts/v1.openapi.json",
+      "sha256": "d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164"
+    },
+    "v2": {
+      "id": "mercurypay-synthetic-contract-v2",
+      "path": "contracts/v2.openapi.json",
+      "sha256": "8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e"
+    }
+  },
+  "mocks": {
+    "v1": {
+      "id": "mercurypay-synthetic-s1",
+      "path": "provider-mocks/v1.json",
+      "sha256": "b6957a1a6e350c374baed8bfcac21bba22b1f8ed1fdb195604ffd85d19d65b9c"
+    },
+    "v2": {
+      "id": "mercurypay-synthetic-s2",
+      "path": "provider-mocks/v2.json",
+      "sha256": "da12aa35e5118cc8a95dfe446fb16b47a2100fe1d688976599e08610a12282cb"
+    }
+  },
+  "businessCase": {
+    "id": "synthetic-checkout-001",
+    "path": "business-cases/checkout.json",
+    "sha256": "e884ef0aa00575d71bfa100850f7d69380ad9a595d0d052dc9bbfd09cbd41b17"
+  },
+  "assertions": {
+    "id": "synthetic-checkout-oracle",
+    "path": "business-cases/assertions.json",
+    "sha256": "3302eb961ac63612c6699cee89ae0d7fbc1508ebbfeddd6be26591186ee632a0"
+  },
+  "migrationMapping": {
+    "id": "synthetic-migration-map",
+    "path": "migration-ground-truth/mapping.json",
+    "sha256": "e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f"
+  },
+  "assertionIds": [
+    "checkout.succeeded",
+    "checkout.transaction-identity",
+    "checkout.amount-preserved",
+    "checkout.currency-preserved",
+    "checkout.customer-preserved"
+  ],
+  "treeDigest": "6fa099c93680d9a1fec24a1cfb1c5a7d7009069adebfa023e6288c208a458b75",
+  "digestPolicy": "sha256-raw-bytes;tree=sha256(sorted-path:sha256\\n)",
+  "testPolicy": {
+    "phase": "foundation-only",
+    "execution": "not-started",
+    "immutableInputs": [
+      "contracts/v1.openapi.json",
+      "contracts/v2.openapi.json",
+      "provider-mocks/v1.json",
+      "provider-mocks/v2.json",
+      "business-cases/checkout.json",
+      "business-cases/assertions.json",
+      "migration-ground-truth/mapping.json"
+    ],
+    "patchAllowedPaths": ["apps/demo-shop/src/v1-adapter.ts"]
+  },
+  "phase4RequiredPins": ["harness", "runtime", "dependencies", "networkPolicy"]
+}

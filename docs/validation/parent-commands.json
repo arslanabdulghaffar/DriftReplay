@@ -1,0 +1,410 @@
+{
+  "scope": "Phase 1 parent shell commands and output retrieval; file edits and browser actions are separate.",
+  "commands": [
+    {
+      "id": "preflight-01",
+      "cmd": "Get-Content -LiteralPath '<LOCAL_ATTACHMENT_DIRECTORY>\\Pasted text.txt' -Raw",
+      "exitCode": 0,
+      "result": "Read explicit Phase 1 authorization."
+    },
+    {
+      "id": "preflight-02",
+      "cmd": "Get-ChildItem -LiteralPath 'A:\\DriftReplay' -Force | Select-Object Mode,Length,Name\nGet-Item -LiteralPath '<USER_HOME>\\Downloads\\DriftReplay_Phase_0_Review_and_Phase_1_Prompt.docx' | Select-Object FullName,Length\nGet-Command node,pnpm,npm,git,rg -ErrorAction SilentlyContinue | Select-Object Name,Source",
+      "exitCode": 0,
+      "result": "Workspace empty; review file exists; tools discovered; formatting obscured paths."
+    },
+    {
+      "id": "preflight-03",
+      "cmd": "$phase1Root = Get-Item -LiteralPath 'A:\\DriftReplay'\n$phase1Entries = @(Get-ChildItem -LiteralPath $phase1Root.FullName -Force)\n[pscustomobject]@{OS=[System.Runtime.InteropServices.RuntimeInformation]::OSDescription; Workspace=$phase1Root.FullName; EntryCount=$phase1Entries.Count; HasGit=(Test-Path -LiteralPath 'A:\\DriftReplay\\.git')} | ConvertTo-Json\nGet-Command node,corepack,pnpm,npm,git,rg -ErrorAction SilentlyContinue | Select-Object Name,Source | ConvertTo-Json\nnode --version\nif (Get-Command corepack -ErrorAction SilentlyContinue) { corepack --version }\npnpm --version\ngit --version\nif (Test-Path -LiteralPath 'A:\\AGENTS.md') { Get-Content -LiteralPath 'A:\\AGENTS.md' -Raw }",
+      "wall_time_seconds": 3.3384831999999998,
+      "exit_code": 0,
+      "original_token_count": 224,
+      "output": "{\r\n  \"OS\": \"Microsoft Windows 10.0.26300\",\r\n  \"Workspace\": \"A:\\\\DriftReplay\",\r\n  \"EntryCount\": 0,\r\n  \"HasGit\": false\r\n}\r\n[\r\n  {\r\n    \"Name\": \"node.exe\",\r\n    \"Source\": \"C:\\\\Program Files\\\\nodejs\\\\node.exe\"\r\n  },\r\n  {\r\n    \"Name\": \"corepack.cmd\",\r\n    \"Source\": \"C:\\\\Program Files\\\\nodejs\\\\corepack.cmd\"\r\n  },\r\n  {\r\n    \"Name\": \"pnpm.cmd\",\r\n    \"Source\": \"<USER_HOME>\\\\.cache\\\\codex-runtimes\\\\codex-primary-runtime\\\\dependencies\\\\bin\\\\fallback\\\\pnpm.cmd\"\r\n  },\r\n  {\r\n    \"Name\": \"npm.ps1\",\r\n    \"Source\": \"C:\\\\Program Files\\\\nodejs\\\\npm.ps1\"\r\n  },\r\n  {\r\n    \"Name\": \"git.exe\",\r\n    \"Source\": \"<USER_HOME>\\\\.cache\\\\codex-runtimes\\\\codex-primary-runtime\\\\dependencies\\\\native\\\\git\\\\cmd\\\\git.exe\"\r\n  },\r\n  {\r\n    \"Name\": \"rg.exe\",\r\n    \"Source\": \"<USER_HOME>\\\\AppData\\\\Local\\\\OpenAI\\\\Codex\\\\bin\\\\9a7ba4b9ea0c44a3\\\\rg.exe\"\r\n  }\r\n]\r\nv24.21.0\r\n0.36.0\n11.25.0\ngit version 2.53.0.windows.3\n"
+    },
+    {
+      "id": "preflight-05",
+      "cmd": "npm view next version engines peerDependencies license scripts --json\nnpm view react version engines license --json\nnpm view react-dom version engines peerDependencies license --json\nnpm view typescript version engines license --json\nnpm view vitest version engines peerDependencies license scripts --json",
+      "wall_time_seconds": 10.0097818,
+      "original_token_count": 184,
+      "output": "{\n  \"version\": \"16.4.0\",\n  \"engines\": {\n    \"node\": \">=20.9.0\"\n  },\n  \"peerDependencies\": {\n    \"sass\": \"^1.3.0\",\n    \"react\": \"^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0\",\n    \"react-dom\": \"^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0\",\n    \"@playwright/test\": \"^1.51.1\",\n    \"@opentelemetry/api\": \"^1.1.0\",\n    \"babel-plugin-react-compiler\": \"*\"\n  },\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"start\": \"node server.js\"\n  }\n}\nnpm notice\nnpm notice New major version of npm available! 11.19.0 -> 12.2.0\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0\nnpm notice To update run: npm install -g npm@12.2.0\nnpm notice\n{\n  \"version\": \"19.3.0\",\n  \"engines\": {\n    \"node\": \">=0.10.0\"\n  },\n  \"license\": \"MIT\"\n}\n"
+    },
+    {
+      "id": "preflight-06",
+      "cmd": "npm view zod version engines license scripts --json\nnpm view eslint version engines peerDependencies license --json\nnpm view eslint-config-next version engines peerDependencies license --json\nnpm view prettier version engines license --json\nnpm view pnpm@11.25.0 version engines license --json\nnpm view @types/node version --json\nnpm view @types/react version --json\nnpm view @types/react-dom version --json",
+      "wall_time_seconds": 10.0130563,
+      "original_token_count": 200,
+      "output": "{\n  \"version\": \"4.6.5\",\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"test\": \"nub exec --node vitest run\",\n    \"build\": \"nub exec --node zshy --project tsconfig.build.json\",\n    \"clean\": \"git clean -xdf . -e node_modules\",\n    \"postbuild\": \"nub ../../scripts/write-stub-package-jsons.ts && nub exec --node biome check --write .\",\n    \"test:watch\": \"nub exec --node vitest\",\n    \"prepublishOnly\": \"nub ../../scripts/check-versions.ts\"\n  }\n}\nnpm notice\nnpm notice New major version of npm available! 11.19.0 -> 12.2.0\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0\nnpm notice To update run: npm install -g npm@12.2.0\nnpm notice\n{\n  \"version\": \"10.12.0\",\n  \"engines\": {\n    \"node\": \"^20.19.0 || ^22.13.0 || >=24\"\n  },\n  \"peerDependencies\": {\n    \"jiti\": \"*\"\n  },\n  \"license\": \"MIT\"\n}\n"
+    },
+    {
+      "id": "preflight-output-35323",
+      "operation": "poll",
+      "wall_time_seconds": 1.23E-05,
+      "exit_code": 0,
+      "original_token_count": 230,
+      "output": "{\n  \"version\": \"19.3.0\",\n  \"peerDependencies\": {\n    \"react\": \"^19.3.0\"\n  },\n  \"license\": \"MIT\"\n}\n{\n  \"version\": \"7.0.2\",\n  \"engines\": {\n    \"node\": \">=16.20.0\"\n  },\n  \"license\": \"Apache-2.0\"\n}\n{\n  \"version\": \"5.0.3\",\n  \"engines\": {\n    \"node\": \"^22.12.0 || ^24.0.0 || >=26.0.0\"\n  },\n  \"peerDependencies\": {\n    \"vite\": \"^6.4.0 || ^7.0.0 || ^8.0.0\",\n    \"jsdom\": \"*\",\n    \"happy-dom\": \"*\",\n    \"@vitest/ui\": \"5.0.3\",\n    \"@types/node\": \"^22.0.0 || >=24.0.0\",\n    \"@edge-runtime/vm\": \"*\",\n    \"@opentelemetry/api\": \"^1.9.0\",\n    \"@vitest/coverage-v8\": \"5.0.3\",\n    \"@vitest/browser-preview\": \"5.0.3\",\n    \"@vitest/coverage-istanbul\": \"5.0.3\",\n    \"@vitest/browser-playwright\": \"5.0.3\",\n    \"@vitest/browser-webdriverio\": \"^5.0.0-beta.5 || >=5.0.0\"\n  },\n  \"license\": \"MIT\",\n  \"scripts\": {\n    \"dev\": \"NODE_OPTIONS=\\\"--max-old-space-size=8192\\\" rollup -c --watch -m inline\",\n    \"build\": \"premove dist && rollup -c\"\n  }\n}\n"
+    },
+    {
+      "id": "preflight-output-42651",
+      "operation": "poll",
+      "wall_time_seconds": 6.8E-06,
+      "exit_code": 0,
+      "original_token_count": 82,
+      "output": "{\n  \"version\": \"16.4.0\",\n  \"peerDependencies\": {\n    \"eslint\": \">=9.0.0\",\n    \"typescript\": \">=3.3.1\"\n  },\n  \"license\": \"MIT\"\n}\n{\n  \"version\": \"3.9.9\",\n  \"engines\": {\n    \"node\": \">=14\"\n  },\n  \"license\": \"MIT\"\n}\n{\n  \"version\": \"11.25.0\",\n  \"engines\": {\n    \"node\": \">=22.13\"\n  },\n  \"license\": \"MIT\"\n}\n\"26.6.5\"\n\"19.3.0\"\n\"19.3.0\"\n"
+    },
+    {
+      "id": "preflight-07",
+      "cmd": "npm view typescript@5.9.3 version engines license --json\nnpm view eslint@9.39.4 version engines license --json\nnpm view @types/node@24.10.0 version license --json\nnpm view vite version engines scripts optionalDependencies --json\nnpm view vitest@5.0.3 dependencies --json\nnpm view eslint-config-next@16.4.0 dependencies --json",
+      "wall_time_seconds": 6.2055491,
+      "exit_code": 0,
+      "original_token_count": 449,
+      "output": "{\n  \"version\": \"5.9.3\",\n  \"engines\": {\n    \"node\": \">=14.17\"\n  },\n  \"license\": \"Apache-2.0\"\n}\n{\n  \"version\": \"9.39.4\",\n  \"engines\": {\n    \"node\": \"^18.18.0 || ^20.9.0 || >=21.1.0\"\n  },\n  \"license\": \"MIT\"\n}\n{\n  \"version\": \"24.10.0\",\n  \"license\": \"MIT\"\n}\n{\n  \"version\": \"8.3.4\",\n  \"engines\": {\n    \"node\": \"^20.19.0 || >=22.12.0\"\n  },\n  \"scripts\": {\n    \"dev\": \"premove dist && pnpm build-bundle -w\",\n    \"lint\": \"eslint --cache --ext .ts src/**\",\n    \"build\": \"premove dist && pnpm build-bundle && pnpm build-types\",\n    \"format\": \"oxfmt\",\n    \"typecheck\": \"tsc && tsc -p src/node && tsc -p src/client && tsc -p src/module-runner && tsc -p src/shared && tsc -p src/node/__tests_dts__ && tsc -p src/module-runner/__tests_dts__\",\n    \"build-types\": \"pnpm build-types-roll && pnpm build-types-check\",\n    \"build-bundle\": \"rolldown --config rolldown.config.ts\",\n    \"generate-target\": \"tsx scripts/generateTarget.ts\",\n    \"build-types-roll\": \"rolldown --config rolldown.dts.config.ts\",\n    \"build-types-check\": \"tsc --project tsconfig.check.json\"\n  },\n  \"optionalDependencies\": {\n    \"fsevents\": \"~2.3.3\"\n  }\n}\n{\n  \"chai\": \"^6.2.2\",\n  \"obug\": \"^2.1.4\",\n  \"std-env\": \"^4.2.0\",\n  \"tinyexec\": \"^1.3.0\",\n  \"picomatch\": \"^4.0.7\",\n  \"tinybench\": \"^6.1.4\",\n  \"tinyglobby\": \"^0.2.17\",\n  \"@types/chai\": \"^5.2.2\",\n  \"expect-type\": \"^1.4.0\",\n  \"magic-string\": \"^1.2.3\",\n  \"@vitest/mocker\": \"5.0.3\",\n  \"es-module-lexer\": \"^2.3.2\",\n  \"why-is-node-running\": \"3.2.1\"\n}\n{\n  \"globals\": \"16.4.0\",\n  \"typescript-eslint\": \"^8.56.0\",\n  \"eslint-plugin-react\": \"^7.37.0\",\n  \"eslint-plugin-import\": \"^2.32.0\",\n  \"eslint-plugin-jsx-a11y\": \"^6.10.0\",\n  \"@next/eslint-plugin-next\": \"16.4.0\",\n  \"eslint-plugin-react-hooks\": \"^7.1.0\",\n  \"eslint-import-resolver-node\": \"^0.3.6\",\n  \"eslint-import-resolver-typescript\": \"^3.5.2\"\n}\n"
+    },
+    {
+      "id": "install-01",
+      "cmd": "pnpm install --ignore-scripts --reporter append-only",
+      "wall_time_seconds": 0.6880565,
+      "exit_code": 1,
+      "original_token_count": 84,
+      "output": "[ERR_PNPM_UNSUPPORTED_ENGINE] Unsupported environment (bad pnpm and/or Node.js version)\n\nYour Node version is incompatible with \"A:\\DriftReplay\".\n\nExpected version: >=24.21.0 <25\nGot: v24.19.0\n\nThis is happening because the package's manifest has an engines.node field specified.\nTo fix this issue, install the required Node version.\n"
+    },
+    {
+      "id": "resume-01",
+      "cmd": "corepack pnpm --version\nGet-Content -LiteralPath '<USER_HOME>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback\\pnpm.cmd' -Raw\nrg --files -g '!node_modules' -g '!.next' -g '!out' -g '!pnpm-lock.yaml'",
+      "wall_time_seconds": 4.5395598,
+      "exit_code": 0,
+      "original_token_count": 394,
+      "output": "11.25.0\n@echo off\r\nsetlocal\r\nset \"pnpm_config_pm_on_fail=ignore\"\r\n\"%~dp0..\\..\\node\\bin\\node.exe\" \"%~dp0..\\..\\node\\node_modules\\pnpm\\bin\\pnpm.mjs\" %*\r\nexit /b %ERRORLEVEL%\r\n\r\nvitest.config.ts\ntsconfig.tests.json\ntsconfig.base.json\neslint.config.mjs\npnpm-workspace.yaml\npackage.json\nscripts\\next.mjs\ndocs\\validation\\web-commands.json\npackages\\core\\tsconfig.json\napps\\web\\tsconfig.json\napps\\web\\package.json\napps\\web\\next.config.mjs\napps\\web\\next-env.d.ts\npackages\\core\\package.json\napps\\demo-shop\\tsconfig.json\napps\\web\\components\\ui.tsx\napps\\web\\components\\navigation.tsx\napps\\web\\components\\icons.tsx\napps\\web\\components\\fixture-data.ts\napps\\demo-shop\\package.json\nexamples\\fixtures\\mercurypay\\tsconfig.json\npackages\\core\\src\\schemas.ts\npackages\\core\\src\\policy.ts\npackages\\core\\src\\index.ts\npackages\\core\\src\\digests.ts\nexamples\\fixtures\\mercurypay\\contracts\\v2.openapi.json\nexamples\\fixtures\\mercurypay\\contracts\\v1.openapi.json\nexamples\\fixtures\\mercurypay\\provider-mocks\\v2.json\nexamples\\fixtures\\mercurypay\\provider-mocks\\v1.json\nexamples\\fixtures\\mercurypay\\package.json\napps\\web\\app\\globals.css\napps\\web\\app\\status\\page.tsx\napps\\web\\app\\page.tsx\napps\\web\\app\\not-found.tsx\napps\\web\\app\\layout.tsx\napps\\web\\app\\error.tsx\nexamples\\fixtures\\mercurypay\\business-cases\\checkout.json\nexamples\\fixtures\\mercurypay\\business-cases\\assertions.json\napps\\demo-shop\\src\\v1-adapter.ts\napps\\demo-shop\\src\\index.ts\napps\\demo-shop\\src\\checkout.ts\nexamples\\fixtures\\mercurypay\\migration-ground-truth\\mapping.json\napps\\web\\app\\evidence\\page.tsx\napps\\web\\app\\fixtures\\mercurypay\\page.tsx\n"
+    },
+    {
+      "id": "install-02",
+      "cmd": "corepack pnpm install --ignore-scripts --reporter append-only",
+      "wall_time_seconds": 10.0032674,
+      "original_token_count": 645,
+      "output": "Scope: all 5 workspace projects\nProgress: resolved 1, reused 0, downloaded 0, added 0\n[WARN] deprecated eslint@9.39.4: This version is no longer supported. Please see https://eslint.org/version-support for other options.\n\n   ╭────────────────────────────────────────────────────────────────────────╮\n   │                                                                        │\n   │                  Update available! 11.25.0 → 12.10.1.                  │\n   │                  Changelog: https://pnpm.io/v/12.10.1                  │\n   │   To update, run: Invoke-WebRequest https://get.pnpm.io/install.ps1    │\n   │                 -UseBasicParsing | Invoke-Expression                   │\n   │                                                                        │\n   ╰────────────────────────────────────────────────────────────────────────╯\n\nProgress: resolved 8, reused 0, downloaded 3, added 0\nProgress: resolved 11, reused 0, downloaded 9, added 0\nProgress: resolved 12, reused 0, downloaded 11, added 0\nProgress: resolved 58, reused 0, downloaded 25, added 0\nProgress: resolved 74, reused 0, downloaded 54, added 0\n[WARN] Tarball download average speed 15 KiB/s (size 26 KiB) is below 50 KiB/s: https://registry.npmjs.org/globals/-/globals-16.4.0.tgz (GET)\n[WARN] Tarball download average speed 15 KiB/s (size 26 KiB) is below 50 KiB/s: https://registry.npmjs.org/undici-types/-/undici-types-7.16.0.tgz (GET)\n[WARN] Tarball download average speed 12 KiB/s (size 22 KiB) is below 50 KiB/s: https://registry.npmjs.org/magic-string/-/magic-string-1.4.3.tgz (GET)\n[WARN] Tarball download average speed 40 KiB/s (size 73 KiB) is below 50 KiB/s: https://registry.npmjs.org/@eslint/config-array/-/config-array-0.21.2.tgz (GET)\nProgress: resolved 90, reused 0, downloaded 78, added 0\nProgress: resolved 155, reused 0, downloaded 110, added 0\n[WARN] Tarball download average speed 11 KiB/s (size 21 KiB) is below 50 KiB/s: https://registry.npmjs.org/@eslint/core/-/core-0.17.0.tgz (GET)\nProgress: resolved 232, reused 0, downloaded 167, added 0\n[WARN] Tarball download average speed 5 KiB/s (size 8 KiB) is below 50 KiB/s: https://registry.npmjs.org/ast-types-flow/-/ast-types-flow-0.0.8.tgz (GET)\nProgress: resolved 235, reused 0, downloaded 171, added 0\n"
+    },
+    {
+      "id": "dep-review-01",
+      "cmd": "npm view eslint-plugin-react version peerDependencies --json\nnpm view typescript-eslint version peerDependencies --json\nnpm view eslint-plugin-jsx-a11y version peerDependencies --json\nnpm view @next/eslint-plugin-next@16.4.0 peerDependencies --json",
+      "wall_time_seconds": 5.4805104,
+      "exit_code": 0,
+      "original_token_count": 90,
+      "output": "{\n  \"version\": \"7.37.5\",\n  \"peerDependencies\": {\n    \"eslint\": \"^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7\"\n  }\n}\n{\n  \"version\": \"8.71.1\",\n  \"peerDependencies\": {\n    \"eslint\": \"^8.57.0 || ^9.0.0 || ^10.0.0\",\n    \"typescript\": \">=4.8.4 <6.1.0\"\n  }\n}\n{\n  \"version\": \"6.10.2\",\n  \"peerDependencies\": {\n    \"eslint\": \"^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9\"\n  }\n}\n"
+    },
+    {
+      "id": "read-01",
+      "cmd": "Get-Content -LiteralPath 'packages\\core\\src\\schemas.ts' -Raw\nGet-Content -LiteralPath 'packages\\core\\src\\policy.ts' -Raw\nGet-Content -LiteralPath 'apps\\web\\components\\fixture-data.ts' -Raw\nGet-Content -LiteralPath 'apps\\web\\app\\page.tsx' -Raw",
+      "wall_time_seconds": 0.6514445,
+      "exit_code": 0,
+      "original_token_count": 3727,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "install-02-completion",
+      "operation": "poll",
+      "wall_time_seconds": 2.13E-05,
+      "exit_code": 0,
+      "original_token_count": 677,
+      "output": "Progress: resolved 235, reused 0, downloaded 172, added 0\n[WARN] Tarball download average speed 5 KiB/s (size 18 KiB) is below 50 KiB/s: https://registry.npmjs.org/semver/-/semver-6.3.1.tgz (GET)\nProgress: resolved 237, reused 0, downloaded 174, added 0\nProgress: resolved 239, reused 0, downloaded 177, added 0\nProgress: resolved 240, reused 0, downloaded 177, added 0\n[WARN] Tarball download average speed 3 KiB/s (size 25 KiB) is below 50 KiB/s: https://registry.npmjs.org/aria-query/-/aria-query-5.3.2.tgz (GET)\nProgress: resolved 243, reused 0, downloaded 179, added 0\nProgress: resolved 318, reused 0, downloaded 212, added 0\nProgress: resolved 338, reused 0, downloaded 250, added 0\nProgress: resolved 338, reused 0, downloaded 254, added 0\n[WARN] Tarball download average speed 37 KiB/s (size 114 KiB) is below 50 KiB/s: https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz (GET)\n[WARN] Tarball download average speed 4 KiB/s (size 11 KiB) is below 50 KiB/s: https://registry.npmjs.org/is-regex/-/is-regex-1.2.1.tgz (GET)\nProgress: resolved 338, reused 0, downloaded 257, added 0\nProgress: resolved 339, reused 0, downloaded 258, added 0\nProgress: resolved 340, reused 0, downloaded 258, added 0\n[WARN] Tarball download average speed 4 KiB/s (size 58 KiB) is below 50 KiB/s: https://registry.npmjs.org/es-iterator-helpers/-/es-iterator-helpers-1.4.0.tgz (GET)\nProgress: resolved 341, reused 0, downloaded 262, added 0\nProgress: resolved 341, reused 0, downloaded 263, added 0\nProgress: resolved 342, reused 0, downloaded 264, added 0\nProgress: resolved 343, reused 0, downloaded 264, added 0\nProgress: resolved 430, reused 0, downloaded 352, added 0\nPackages: +364\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\nPackages are hard linked from the content-addressable store to the virtual store.\n  Content-addressable store is at: A:\\.pnpm-store\\v11\n  Virtual store is at:             node_modules/.pnpm\nProgress: resolved 448, reused 0, downloaded 370, added 99\nProgress: resolved 448, reused 0, downloaded 370, added 305\nProgress: resolved 448, reused 0, downloaded 370, added 363\nProgress: resolved 448, reused 0, downloaded 371, added 363\nProgress: resolved 448, reused 0, downloaded 371, added 364\nProgress: resolved 448, reused 0, downloaded 371, added 364, done\n\ndevDependencies:\n+ @driftreplay/core 0.1.0 <- packages\\core\n+ @driftreplay/demo-shop 0.1.0 <- apps\\demo-shop\n+ @driftreplay/fixtures 0.1.0 <- examples\\fixtures\\mercurypay\n+ @types/node 24.10.0\n+ eslint 9.39.4 (10.12.0 is available) deprecated\n+ eslint-config-next 16.4.0\n+ prettier 3.9.9\n+ typescript 5.9.3 (7.0.2 is available)\n+ vite 8.3.4\n+ vitest 5.0.3\n\nDone in 33.7s using pnpm v11.25.0\n"
+    },
+    {
+      "id": "dep-review-02",
+      "cmd": "npm view @eslint/js version engines license --json\nnpm view globals version engines license --json",
+      "wall_time_seconds": 2.8060258,
+      "exit_code": 0,
+      "original_token_count": 49,
+      "output": "{\n  \"version\": \"10.0.1\",\n  \"engines\": {\n    \"node\": \"^20.19.0 || ^22.13.0 || >=24\"\n  },\n  \"license\": \"MIT\"\n}\n{\n  \"version\": \"17.13.0\",\n  \"engines\": {\n    \"node\": \">=18\"\n  },\n  \"license\": \"MIT\"\n}\n"
+    },
+    {
+      "id": "install-03",
+      "cmd": "corepack pnpm install --ignore-scripts --reporter append-only",
+      "wall_time_seconds": 1.5045416999999999,
+      "exit_code": 0,
+      "original_token_count": 50,
+      "output": "Scope: all 5 workspace projects\n✓ Lockfile passes supply-chain policies (verified 2s ago)\nLockfile is up to date, resolution step is skipped\nAlready up to date\n\nDone in 960ms using pnpm v11.25.0\n"
+    },
+    {
+      "id": "dep-inventory-01",
+      "cmd": "node scripts/dependency-inventory.mjs --write\nGet-Content -LiteralPath 'pnpm-workspace.yaml' -Raw\nGet-Content -LiteralPath 'package.json' -Raw",
+      "wall_time_seconds": 6.7274173,
+      "exit_code": 0,
+      "original_token_count": 499,
+      "output": "{\n  \"count\": 400,\n  \"lifecycle\": [\n    {\n      \"name\": \"ljharb-monorepo-symlink-test\",\n      \"version\": \"0.0.0\",\n      \"license\": \"MIT\",\n      \"lifecycle\": {\n        \"postinstall\": \"lerna bootstrap\"\n      },\n      \"private\": true\n    },\n    {\n      \"name\": \"unrs-resolver\",\n      \"version\": \"1.12.2\",\n      \"license\": \"MIT\",\n      \"lifecycle\": {\n        \"postinstall\": \"node postinstall.js\"\n      },\n      \"private\": false\n    }\n  ]\n}\npackages:\n  - apps/*\n  - packages/*\n  - examples/fixtures/mercurypay\n\nsaveExact: true\nengineStrict: true\nstrictPeerDependencies: true\nstrictDepBuilds: true\nallowBuilds: {}\nenableGlobalVirtualStore: false\nignorePnpmfile: true\n\r\n{\n  \"name\": \"driftreplay\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"packageManager\": \"pnpm@11.25.0\",\n  \"engines\": { \"node\": \">=24.21.0 <25\", \"pnpm\": \"11.25.0\" },\n  \"scripts\": {\n    \"dev\": \"corepack pnpm --filter @driftreplay/web dev\",\n    \"typecheck\": \"corepack pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit\",\n    \"lint\": \"eslint . --max-warnings 0\",\n    \"format\": \"prettier --write .\",\n    \"format:check\": \"prettier --check .\",\n    \"test\": \"vitest run\",\n    \"test:fixtures\": \"vitest run tests/fixtures\",\n    \"build\": \"corepack pnpm --filter @driftreplay/web build\",\n    \"smoke\": \"node scripts/smoke.mjs\",\n    \"preview\": \"node scripts/preview.mjs\",\n    \"check\": \"corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm build && corepack pnpm smoke\"\n  },\n  \"devDependencies\": {\n    \"@driftreplay/core\": \"workspace:0.1.0\",\n    \"@driftreplay/demo-shop\": \"workspace:0.1.0\",\n    \"@driftreplay/fixtures\": \"workspace:0.1.0\",\n    \"@types/node\": \"24.10.0\",\n    \"@eslint/js\": \"10.0.1\",\n    \"@next/eslint-plugin-next\": \"16.4.0\",\n    \"eslint\": \"10.12.0\",\n    \"globals\": \"17.13.0\",\n    \"prettier\": \"3.9.9\",\n    \"typescript\": \"5.9.3\",\n    \"typescript-eslint\": \"8.71.1\",\n    \"vite\": \"8.3.4\",\n    \"vitest\": \"5.0.3\"\n  }\n}\n\r\n"
+    },
+    {
+      "id": "install-04",
+      "cmd": "corepack pnpm install --frozen-lockfile --ignore-scripts --reporter append-only\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\ncorepack pnpm list -r --depth Infinity --json | Set-Content -LiteralPath 'docs\\validation\\dependency-tree.json' -Encoding utf8",
+      "wall_time_seconds": 2.2801424,
+      "exit_code": 0,
+      "original_token_count": 50,
+      "output": "Scope: all 5 workspace projects\n✓ Lockfile passes supply-chain policies (verified 49s ago)\nLockfile is up to date, resolution step is skipped\nAlready up to date\n\nDone in 951ms using pnpm v11.25.0\n"
+    },
+    {
+      "id": "read-02",
+      "cmd": "Get-Content -LiteralPath 'docs\\validation\\dependency-tree.json' -TotalCount 65\nGet-Content -LiteralPath 'apps\\web\\app\\layout.tsx' -Raw\nGet-Content -LiteralPath 'apps\\web\\app\\globals.css' -TotalCount 70",
+      "wall_time_seconds": 0.4369552,
+      "exit_code": 0,
+      "original_token_count": 2431,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "dep-audit-01",
+      "cmd": "node scripts/dependency-inventory.mjs --write\ncorepack pnpm audit --json | Set-Content -LiteralPath 'docs\\validation\\dependency-audit.json' -Encoding utf8\nexit $LASTEXITCODE",
+      "wall_time_seconds": 1.6726983,
+      "exit_code": 1,
+      "original_token_count": 10,
+      "output": "{\n  \"count\": 202,\n  \"lifecycle\": []\n}\n"
+    },
+    {
+      "id": "read-03",
+      "cmd": "Get-Content -LiteralPath 'docs\\validation\\dependency-audit.json' -Raw\nGet-Content -LiteralPath 'examples\\fixtures\\mercurypay\\validation.ts' -Raw",
+      "wall_time_seconds": 0.4306408,
+      "exit_code": 0,
+      "original_token_count": 5207,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "install-05-audit",
+      "cmd": "corepack pnpm install --ignore-scripts --reporter append-only\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\ncorepack pnpm audit --json | Set-Content -LiteralPath 'docs\\validation\\dependency-audit-final.json' -Encoding utf8\nexit $LASTEXITCODE",
+      "wall_time_seconds": 2.5544172,
+      "exit_code": 0,
+      "original_token_count": 66,
+      "output": "Scope: all 5 workspace projects\n✓ Lockfile passes supply-chain policies (verified 1m ago)\nLockfile is up to date, resolution step is skipped\nPackages: -18\n------------------\n\ndevDependencies:\n- @next/eslint-plugin-next 16.4.0\n\nDone in 949ms using pnpm v11.25.0\n"
+    },
+    {
+      "id": "format-01",
+      "cmd": "corepack pnpm format",
+      "wall_time_seconds": 2.1674576,
+      "exit_code": 0,
+      "original_token_count": 645,
+      "output": "$ prettier --write .\n.github/workflows/ci.yml 31ms (unchanged)\n.prettierrc.json 21ms (unchanged)\napps/demo-shop/package.json 2ms\napps/demo-shop/src/checkout.ts 47ms (unchanged)\napps/demo-shop/src/index.ts 5ms (unchanged)\napps/demo-shop/src/v1-adapter.ts 6ms (unchanged)\napps/demo-shop/tsconfig.json 1ms (unchanged)\napps/web/app/error.tsx 7ms\napps/web/app/evidence/page.tsx 20ms\napps/web/app/fixtures/mercurypay/page.tsx 7ms\napps/web/app/globals.css 135ms\napps/web/app/layout.tsx 9ms\napps/web/app/not-found.tsx 1ms\napps/web/app/page.tsx 13ms\napps/web/app/status/page.tsx 7ms\napps/web/components/fixture-data.ts 2ms (unchanged)\napps/web/components/icons.tsx 5ms\napps/web/components/navigation.tsx 7ms\napps/web/components/ui.tsx 7ms\napps/web/next.config.mjs 5ms (unchanged)\napps/web/package.json 1ms\napps/web/tsconfig.json 1ms\ndocs/adr/0001-foundation.md 38ms (unchanged)\ndocs/dependencies.md 21ms\ndocs/phase-gates.md 5ms\ndocs/security-boundaries.md 8ms (unchanged)\ndocs/supported-scope.md 6ms\neslint.config.mjs 4ms\nexamples/fixtures/mercurypay/business-cases/assertions.json 2ms (unchanged)\nexamples/fixtures/mercurypay/business-cases/checkout.json 1ms (unchanged)\nexamples/fixtures/mercurypay/contracts/v1.openapi.json 3ms (unchanged)\nexamples/fixtures/mercurypay/contracts/v2.openapi.json 3ms (unchanged)\nexamples/fixtures/mercurypay/fixture-manifest.json 2ms (unchanged)\nexamples/fixtures/mercurypay/migration-ground-truth/mapping.json 1ms (unchanged)\nexamples/fixtures/mercurypay/package.json 1ms\nexamples/fixtures/mercurypay/provider-mocks/v1.json 1ms (unchanged)\nexamples/fixtures/mercurypay/provider-mocks/v2.json 2ms (unchanged)\nexamples/fixtures/mercurypay/README.md 5ms (unchanged)\nexamples/fixtures/mercurypay/tsconfig.json 1ms (unchanged)\nexamples/fixtures/mercurypay/validation.ts 46ms (unchanged)\npackage.json 1ms\npackages/core/package.json 1ms\npackages/core/README.md 6ms (unchanged)\npackages/core/src/digests.test.ts 6ms (unchanged)\npackages/core/src/digests.ts 5ms (unchanged)\npackages/core/src/index.ts 3ms (unchanged)\npackages/core/src/policy.test.ts 7ms (unchanged)\npackages/core/src/policy.ts 5ms (unchanged)\npackages/core/src/schemas.test.ts 12ms (unchanged)\npackages/core/src/schemas.ts 15ms (unchanged)\npackages/core/tsconfig.json 1ms (unchanged)\npnpm-workspace.yaml 3ms (unchanged)\nREADME.md 19ms\nscripts/dependency-inventory.mjs 10ms\nscripts/next.mjs 3ms\nscripts/preview.mjs 5ms\nscripts/smoke.mjs 4ms\ntests/fixtures/mercurypay.test.ts 22ms (unchanged)\ntsconfig.base.json 1ms (unchanged)\ntsconfig.tests.json 1ms (unchanged)\nvitest.config.ts 2ms (unchanged)\n"
+    },
+    {
+      "id": "gate-01",
+      "cmd": "corepack pnpm typecheck",
+      "wall_time_seconds": 6.8986288,
+      "exit_code": 0,
+      "original_token_count": 99,
+      "output": "$ corepack pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit\nScope: 4 of 5 workspace projects\npackages/core typecheck$ tsc --noEmit\npackages/core typecheck: Done\napps/demo-shop typecheck$ tsc --noEmit\nexamples/fixtures/mercurypay typecheck$ tsc --noEmit\napps/demo-shop typecheck: Done\nexamples/fixtures/mercurypay typecheck: Done\napps/web typecheck$ tsc --noEmit\napps/web typecheck: Done\n"
+    },
+    {
+      "id": "gate-02",
+      "cmd": "corepack pnpm lint",
+      "wall_time_seconds": 3.0442228,
+      "exit_code": 0,
+      "original_token_count": 7,
+      "output": "$ eslint . --max-warnings 0\n"
+    },
+    {
+      "id": "gate-03",
+      "cmd": "corepack pnpm test",
+      "wall_time_seconds": 1.8882394,
+      "exit_code": 0,
+      "original_token_count": 48,
+      "output": "$ vitest run\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  4 passed (4)\n      Tests  77 passed (77)\n   Start at  08:09:25\n   Duration  579ms (import 47%, transform 32%, tests 19%, worker 2%)\n\n"
+    },
+    {
+      "id": "build-01",
+      "cmd": "corepack pnpm build",
+      "wall_time_seconds": 10.0110874,
+      "original_token_count": 21,
+      "output": "$ corepack pnpm --filter @driftreplay/web build\n$ node ../../scripts/next.mjs build\n"
+    },
+    {
+      "id": "tool-docs-02",
+      "cmd": "Get-Content -LiteralPath '<USER_HOME>\\.codex\\plugins\\cache\\openai-bundled\\computer-use\\26.1007.21434\\docs\\guidance.md' -Raw\nGet-Content -LiteralPath '<USER_HOME>\\.codex\\plugins\\cache\\openai-bundled\\computer-use\\26.1007.21434\\docs\\confirmations.md' -Raw",
+      "wall_time_seconds": 0.4246928,
+      "exit_code": 0,
+      "original_token_count": 4637,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "build-01-progress",
+      "operation": "poll",
+      "wall_time_seconds": 5.0097217,
+      "original_token_count": 29,
+      "output": "▲ Next.js 16.4.0 (Turbopack)\n✓ Running next.config.mjs took 133ms\n\n  Creating an optimized production build ...\n"
+    },
+    {
+      "id": "build-01-progress-2",
+      "operation": "poll",
+      "wall_time_seconds": 2.3E-05,
+      "exit_code": 0,
+      "original_token_count": 147,
+      "output": "✓ Compiled successfully in 5.4s\n  Running TypeScript ...\n  Finished TypeScript in 2.2s ...\n  Collecting page data using 7 workers ...\n  Generating static pages using 7 workers (0/6) ...\n  Generating static pages using 7 workers (1/6) \r\n  Generating static pages using 7 workers (2/6) \r\n  Generating static pages using 7 workers (4/6) \r\n✓ Generating static pages using 7 workers (6/6) in 1001ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├ ○ /evidence\n├ ○ /fixtures/mercurypay\n└ ○ /status\n\n\n○  (Static)  prerendered as static content\n\n"
+    },
+    {
+      "id": "gate-04",
+      "cmd": "corepack pnpm test:fixtures\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\ncorepack pnpm format:check",
+      "wall_time_seconds": 3.9657267000000003,
+      "exit_code": 0,
+      "original_token_count": 73,
+      "output": "$ vitest run tests/fixtures\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  13:03:14\n   Duration  627ms (import 33%, transform 33%, tests 33%, worker 1%)\n\n$ prettier --check .\nChecking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "id": "lock-repro-01",
+      "cmd": "$phase1LockBefore = (Get-FileHash -LiteralPath 'pnpm-lock.yaml' -Algorithm SHA256).Hash\ncorepack pnpm install --frozen-lockfile --ignore-scripts --reporter append-only\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n$phase1LockAfter = (Get-FileHash -LiteralPath 'pnpm-lock.yaml' -Algorithm SHA256).Hash\n[pscustomobject]@{Before=$phase1LockBefore; After=$phase1LockAfter; Unchanged=($phase1LockBefore -eq $phase1LockAfter)} | ConvertTo-Json\nif ($phase1LockBefore -ne $phase1LockAfter) { exit 1 }\ncorepack pnpm list -r --depth Infinity --json | Set-Content -LiteralPath 'docs\\validation\\dependency-tree.json' -Encoding utf8\nnode scripts/dependency-inventory.mjs --write",
+      "wall_time_seconds": 6.1870397,
+      "exit_code": 0,
+      "original_token_count": 124,
+      "output": "Scope: all 5 workspace projects\n? Verifying lockfile against supply-chain policies (242 entries)...\nLockfile is up to date, resolution step is skipped\nAlready up to date\n\n✓ Lockfile passes supply-chain policies (242 entries in 4.1s)\nDone in 4.6s using pnpm v11.25.0\n{\r\n  \"Before\": \"5A94BFAB1B82BDD2913ECA84619CF5E71AAFA107410BD2642E19B5F66D747DF5\",\r\n  \"After\": \"5A94BFAB1B82BDD2913ECA84619CF5E71AAFA107410BD2642E19B5F66D747DF5\",\r\n  \"Unchanged\": true\r\n}\r\n{\n  \"count\": 184,\n  \"lifecycle\": []\n}\n"
+    },
+    {
+      "id": "smoke-01",
+      "cmd": "corepack pnpm smoke",
+      "wall_time_seconds": 0.9480827,
+      "exit_code": 0,
+      "original_token_count": 121,
+      "output": "$ node scripts/smoke.mjs\nPASS /: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /fixtures/mercurypay: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /evidence: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /status: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS missing page: 404; unsupported method: 405\n6 local HTTP smoke checks passed. No replay or real-provider validation performed.\n"
+    },
+    {
+      "id": "preview-01",
+      "cmd": "corepack pnpm preview",
+      "wall_time_seconds": 10.0016108,
+      "original_token_count": 18,
+      "output": "$ node scripts/preview.mjs\nLocal static preview: http://127.0.0.1:4173\n"
+    },
+    {
+      "id": "read-ui-01",
+      "cmd": "Get-Content -LiteralPath 'apps\\web\\app\\evidence\\page.tsx' -TotalCount 95\nGet-Content -LiteralPath 'apps\\web\\app\\fixtures\\mercurypay\\page.tsx' -Raw\nGet-Content -LiteralPath 'examples\\fixtures\\mercurypay\\migration-ground-truth\\mapping.json' -Raw",
+      "wall_time_seconds": 0.4997992,
+      "exit_code": 0,
+      "original_token_count": 1818,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "fixture-attribution-01",
+      "cmd": "$phase1DigestUpdate = @'\nimport { readFileSync, writeFileSync } from 'node:fs';\nimport { createHash } from 'node:crypto';\nconst root = 'examples/fixtures/mercurypay/';\nconst file = root + 'fixture-manifest.json';\nconst manifest = JSON.parse(readFileSync(file,'utf8'));\nconst refs = [manifest.contracts.v1, manifest.contracts.v2, manifest.mocks.v1, manifest.mocks.v2, manifest.businessCase, manifest.assertions, manifest.migrationMapping];\nconst hash = bytes => createHash('sha256').update(bytes).digest('hex');\nfor (const ref of refs) ref.sha256 = hash(readFileSync(root + ref.path));\nmanifest.treeDigest = hash(refs.map(ref => ref.path+':'+ref.sha256+'\\n').sort().join(''));\nwriteFileSync(file, JSON.stringify(manifest,null,2)+'\\n');\nconsole.log(JSON.stringify({reason:'Correct attribution: owner-specified mapping, not human-authored JSON; no business inputs/assertions changed.',treeDigest:manifest.treeDigest,refs},null,2));\n'@\nnode --input-type=module -e $phase1DigestUpdate\ncorepack pnpm exec prettier --write apps/web/app/evidence/page.tsx examples/fixtures/mercurypay/fixture-manifest.json",
+      "wall_time_seconds": 1.3451844,
+      "exit_code": 0,
+      "original_token_count": 400,
+      "output": "{\n  \"reason\": \"Correct attribution: owner-specified mapping, not human-authored JSON; no business inputs/assertions changed.\",\n  \"treeDigest\": \"6fa099c93680d9a1fec24a1cfb1c5a7d7009069adebfa023e6288c208a458b75\",\n  \"refs\": [\n    {\n      \"id\": \"mercurypay-synthetic-contract-v1\",\n      \"path\": \"contracts/v1.openapi.json\",\n      \"sha256\": \"d07ccd275971286eb7b702b2f0a8c86c2f69a502370e3a84e0f6997b66fbd164\"\n    },\n    {\n      \"id\": \"mercurypay-synthetic-contract-v2\",\n      \"path\": \"contracts/v2.openapi.json\",\n      \"sha256\": \"8d9d56cfaafef102a4064cd0a44fbeaf17a6a8f2ed196f5d7f953c7a1d57531e\"\n    },\n    {\n      \"id\": \"mercurypay-synthetic-s1\",\n      \"path\": \"provider-mocks/v1.json\",\n      \"sha256\": \"b6957a1a6e350c374baed8bfcac21bba22b1f8ed1fdb195604ffd85d19d65b9c\"\n    },\n    {\n      \"id\": \"mercurypay-synthetic-s2\",\n      \"path\": \"provider-mocks/v2.json\",\n      \"sha256\": \"da12aa35e5118cc8a95dfe446fb16b47a2100fe1d688976599e08610a12282cb\"\n    },\n    {\n      \"id\": \"synthetic-checkout-001\",\n      \"path\": \"business-cases/checkout.json\",\n      \"sha256\": \"e884ef0aa00575d71bfa100850f7d69380ad9a595d0d052dc9bbfd09cbd41b17\"\n    },\n    {\n      \"id\": \"synthetic-checkout-oracle\",\n      \"path\": \"business-cases/assertions.json\",\n      \"sha256\": \"3302eb961ac63612c6699cee89ae0d7fbc1508ebbfeddd6be26591186ee632a0\"\n    },\n    {\n      \"id\": \"synthetic-migration-map\",\n      \"path\": \"migration-ground-truth/mapping.json\",\n      \"sha256\": \"e1494197b575503c48681ea4188a2b70c8631e9742eeee343136f1741db5456f\"\n    }\n  ]\n}\napps/web/app/evidence/page.tsx 83ms\nexamples/fixtures/mercurypay/fixture-manifest.json 13ms\n"
+    },
+    {
+      "id": "final-gate-01",
+      "cmd": "corepack pnpm check",
+      "wall_time_seconds": 10.0101118,
+      "original_token_count": 150,
+      "output": "$ corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm build && corepack pnpm smoke\n$ corepack pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit\nScope: 4 of 5 workspace projects\npackages/core typecheck$ tsc --noEmit\npackages/core typecheck: Done\nexamples/fixtures/mercurypay typecheck$ tsc --noEmit\napps/demo-shop typecheck$ tsc --noEmit\napps/demo-shop typecheck: Done\nexamples/fixtures/mercurypay typecheck: Done\napps/web typecheck$ tsc --noEmit\napps/web typecheck: Done\n$ eslint . --max-warnings 0\n"
+    },
+    {
+      "id": "scope-audit-01",
+      "cmd": "$phase1SourceFiles = @(rg --files --hidden -g '!node_modules/**' -g '!**/node_modules/**' -g '!**/.next/**' -g '!**/out/**' -g '!**/*.tsbuildinfo' -g '!docs/validation/**')\n$phase1SourceFiles | Sort-Object | Set-Content -LiteralPath 'docs\\validation\\source-file-inventory.txt' -Encoding utf8\n$phase1SecretMatches = @($phase1SourceFiles | Select-String -Pattern '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----','ghp_[A-Za-z0-9]{30,}','github_pat_[A-Za-z0-9_]{30,}','sk-proj-[A-Za-z0-9_-]{20,}','AKIA[A-Z0-9]{16}' -ErrorAction Stop)\n$phase1EnvFiles = @(Get-ChildItem -LiteralPath '.' -Force -File -Filter '.env*')\n$phase1Audit = Get-Content -LiteralPath 'docs\\validation\\dependency-audit-final.json' -Raw | ConvertFrom-Json\n$phase1Inventory = Get-Content -LiteralPath 'docs\\validation\\dependency-inventory.json' -Raw | ConvertFrom-Json\n[pscustomobject]@{GitInitialized=(Test-Path -LiteralPath '.git');SourceFiles=$phase1SourceFiles.Count;SecretPatternMatches=$phase1SecretMatches.Count;EnvironmentFiles=@($phase1EnvFiles.Name);Advisories=$phase1Audit.metadata.vulnerabilities;LicenseCounts=@($phase1Inventory.packages | Group-Object license | Select-Object Name,Count)} | ConvertTo-Json -Depth 8",
+      "wall_time_seconds": 0.4271084,
+      "exit_code": 0,
+      "original_token_count": 226,
+      "output": "{\r\n  \"GitInitialized\": false,\r\n  \"SourceFiles\": 68,\r\n  \"SecretPatternMatches\": 0,\r\n  \"EnvironmentFiles\": [\r\n    \".env.example\"\r\n  ],\r\n  \"Advisories\": {\r\n    \"info\": 0,\r\n    \"low\": 0,\r\n    \"moderate\": 0,\r\n    \"high\": 0,\r\n    \"critical\": 0\r\n  },\r\n  \"LicenseCounts\": [\r\n    {\r\n      \"Name\": \"0BSD\",\r\n      \"Count\": 1\r\n    },\r\n    {\r\n      \"Name\": \"Apache-2.0\",\r\n      \"Count\": 18\r\n    },\r\n    {\r\n      \"Name\": \"Apache-2.0 AND LGPL-3.0-or-later\",\r\n      \"Count\": 1\r\n    },\r\n    {\r\n      \"Name\": \"BlueOak-1.0.0\",\r\n      \"Count\": 1\r\n    },\r\n    {\r\n      \"Name\": \"BSD-2-Clause\",\r\n      \"Count\": 6\r\n    },\r\n    {\r\n      \"Name\": \"BSD-3-Clause\",\r\n      \"Count\": 2\r\n    },\r\n    {\r\n      \"Name\": \"CC-BY-4.0\",\r\n      \"Count\": 1\r\n    },\r\n    {\r\n      \"Name\": \"ISC\",\r\n      \"Count\": 10\r\n    },\r\n    {\r\n      \"Name\": \"MIT\",\r\n      \"Count\": 142\r\n    },\r\n    {\r\n      \"Name\": \"MPL-2.0\",\r\n      \"Count\": 2\r\n    }\r\n  ]\r\n}\r\n"
+    },
+    {
+      "id": "scope-audit-02",
+      "cmd": "$phase1SourceFiles = @(Get-Content -LiteralPath 'docs\\validation\\source-file-inventory.txt')\n$phase1SecretMatches = @(Select-String -LiteralPath $phase1SourceFiles -Pattern '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----','ghp_[A-Za-z0-9]{30,}','github_pat_[A-Za-z0-9_]{30,}','sk-proj-[A-Za-z0-9_-]{20,}','AKIA[A-Z0-9]{16}' -ErrorAction Stop)\n[pscustomobject]@{Scan='FILE CONTENTS (supersedes earlier filename-only check)';FileCount=$phase1SourceFiles.Count;Matches=$phase1SecretMatches.Count} | ConvertTo-Json\n$phase1Inventory = Get-Content -LiteralPath 'docs\\validation\\dependency-inventory.json' -Raw | ConvertFrom-Json\n$phase1Inventory.packages | Where-Object {$_.license -match 'LGPL|MPL|CC-BY'} | Select-Object name,version,license | ConvertTo-Json",
+      "wall_time_seconds": 0.9018664,
+      "exit_code": 0,
+      "original_token_count": 135,
+      "output": "{\r\n  \"Scan\": \"FILE CONTENTS (supersedes earlier filename-only check)\",\r\n  \"FileCount\": 68,\r\n  \"Matches\": 0\r\n}\r\n[\r\n  {\r\n    \"name\": \"@img/sharp-win32-x64\",\r\n    \"version\": \"0.35.5\",\r\n    \"license\": \"Apache-2.0 AND LGPL-3.0-or-later\"\r\n  },\r\n  {\r\n    \"name\": \"caniuse-lite\",\r\n    \"version\": \"1.0.30001815\",\r\n    \"license\": \"CC-BY-4.0\"\r\n  },\r\n  {\r\n    \"name\": \"lightningcss-win32-x64-msvc\",\r\n    \"version\": \"1.33.0\",\r\n    \"license\": \"MPL-2.0\"\r\n  },\r\n  {\r\n    \"name\": \"lightningcss\",\r\n    \"version\": \"1.33.0\",\r\n    \"license\": \"MPL-2.0\"\r\n  }\r\n]\r\n"
+    },
+    {
+      "id": "final-gate-01-progress",
+      "operation": "poll",
+      "wall_time_seconds": 9.3E-06,
+      "exit_code": 0,
+      "original_token_count": 438,
+      "output": "$ prettier --check .\nChecking formatting...\nAll matched files use Prettier code style!\n$ vitest run\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  4 passed (4)\n      Tests  77 passed (77)\n   Start at  13:07:39\n   Duration  448ms (import 51%, transform 30%, tests 17%, worker 2%)\n\n$ vitest run tests/fixtures\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  13:07:41\n   Duration  545ms (transform 34%, import 33%, tests 31%, worker 2%)\n\n$ corepack pnpm --filter @driftreplay/web build\n$ node ../../scripts/next.mjs build\n▲ Next.js 16.4.0 (Turbopack)\n✓ Running next.config.mjs took 18ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 438ms\n  Running TypeScript ...\n  Finished TypeScript in 1606ms ...\n  Collecting page data using 7 workers ...\n  Generating static pages using 7 workers (0/6) ...\n  Generating static pages using 7 workers (1/6) \r\n  Generating static pages using 7 workers (2/6) \r\n  Generating static pages using 7 workers (4/6) \r\n✓ Generating static pages using 7 workers (6/6) in 746ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├ ○ /evidence\n├ ○ /fixtures/mercurypay\n└ ○ /status\n\n\n○  (Static)  prerendered as static content\n\n$ node scripts/smoke.mjs\nPASS /: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /fixtures/mercurypay: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /evidence: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /status: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS missing page: 404; unsupported method: 405\n6 local HTTP smoke checks passed. No replay or real-provider validation performed.\n"
+    },
+    {
+      "id": "read-final-01",
+      "cmd": "Get-Content -LiteralPath 'apps\\web\\app\\globals.css' -Tail 135\nGet-Content -LiteralPath 'docs\\validation\\web-commands.json' -TotalCount 30\nGet-Content -LiteralPath 'docs\\validation\\core-commands.json' -TotalCount 20\nGet-Content -LiteralPath 'docs\\validation\\fixture-commands.json' -TotalCount 20",
+      "wall_time_seconds": 0.4575233,
+      "exit_code": 0,
+      "original_token_count": 1559,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "read-final-02",
+      "cmd": "rg -n -A 18 -B 6 'overflow-x: auto|\\.navigation|@media \\(max-width' apps/web/app/globals.css",
+      "wall_time_seconds": 0.3930414,
+      "exit_code": 0,
+      "original_token_count": 963,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "mobile-build-01",
+      "cmd": "corepack pnpm exec prettier --write apps/web/app/globals.css docs/dependencies.md\ncorepack pnpm build\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\ncorepack pnpm smoke",
+      "wall_time_seconds": 6.2807764,
+      "exit_code": 0,
+      "original_token_count": 338,
+      "output": "apps/web/app/globals.css 102ms (unchanged)\ndocs/dependencies.md 35ms (unchanged)\n$ corepack pnpm --filter @driftreplay/web build\n$ node ../../scripts/next.mjs build\n▲ Next.js 16.4.0 (Turbopack)\n✓ Running next.config.mjs took 16ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 265ms\n  Running TypeScript ...\n  Finished TypeScript in 1244ms ...\n  Collecting page data using 7 workers ...\n  Generating static pages using 7 workers (0/6) ...\n  Generating static pages using 7 workers (1/6) \r\n  Generating static pages using 7 workers (2/6) \r\n  Generating static pages using 7 workers (4/6) \r\n✓ Generating static pages using 7 workers (6/6) in 719ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├ ○ /evidence\n├ ○ /fixtures/mercurypay\n└ ○ /status\n\n\n○  (Static)  prerendered as static content\n\n$ node scripts/smoke.mjs\nPASS /: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /fixtures/mercurypay: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /evidence: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /status: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS missing page: 404; unsupported method: 405\n6 local HTTP smoke checks passed. No replay or real-provider validation performed.\n"
+    },
+    {
+      "id": "handoff-read-01",
+      "cmd": "Get-Content -LiteralPath '<LOCAL_ATTACHMENT_DIRECTORY>\\Pasted text.txt'",
+      "wall_time_seconds": 0.3298273,
+      "exit_code": 0,
+      "original_token_count": 5427,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "handoff-read-02",
+      "cmd": "Get-Content -LiteralPath 'docs\\dependencies.md'; Get-Content -LiteralPath 'docs\\validation\\source-file-inventory.txt'; Get-Content -LiteralPath 'package.json'",
+      "wall_time_seconds": 0.4413382,
+      "exit_code": 0,
+      "original_token_count": 2309,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "handoff-read-03",
+      "cmd": "Get-Content -LiteralPath 'docs\\phase-gates.md'; Get-Content -LiteralPath 'docs\\validation\\core-commands.json'; Get-ChildItem -LiteralPath 'docs\\validation' -File | Select-Object Name,Length",
+      "wall_time_seconds": 0.5238423,
+      "exit_code": 0,
+      "original_token_count": 2754,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "handoff-read-04",
+      "cmd": "$phase1Logs = @{}; foreach ($phase1LogName in @('core-commands','fixture-commands','web-commands')) { $phase1Logs[$phase1LogName] = Get-Content -LiteralPath ('docs/validation/' + $phase1LogName + '.json') -Raw | ConvertFrom-Json }; $phase1Logs | ConvertTo-Json -Depth 50",
+      "wall_time_seconds": 0.5128317,
+      "exit_code": 0,
+      "original_token_count": 5847,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "report-inputs-01",
+      "cmd": "Get-Content -LiteralPath 'docs\\validation\\source-file-inventory.txt' -Raw; Get-Content -LiteralPath 'examples\\fixtures\\mercurypay\\fixture-manifest.json' -Raw; Get-Content -LiteralPath 'docs\\supported-scope.md' -Raw; Get-Content -LiteralPath '.prettierignore' -Raw",
+      "wall_time_seconds": 0.4970223,
+      "exit_code": 0,
+      "original_token_count": 1732,
+      "output": "[Publication redaction: duplicated local/document/tool-guidance read output omitted; command and exit status retained. Original preserved in ignored local backup.]"
+    },
+    {
+      "id": "closeout-format-01",
+      "cmd": "corepack pnpm exec prettier --write PHASE_1_REPORT.md docs/dependencies.md\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\ncorepack pnpm format:check\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n$phase1FinalFiles = @(rg --files --hidden -g '!node_modules/**' -g '!**/node_modules/**' -g '!**/.next/**' -g '!**/out/**' -g '!**/*.tsbuildinfo' -g '!docs/validation/**')\n$phase1FinalFiles | Sort-Object | Set-Content -LiteralPath 'docs/validation/source-file-inventory.txt' -Encoding utf8\n$phase1FinalReport = Get-Content -LiteralPath 'PHASE_1_REPORT.md' -Raw\n$phase1FinalManifest = Get-Content -LiteralPath 'examples/fixtures/mercurypay/fixture-manifest.json' -Raw | ConvertFrom-Json\n$phase1FinalLockHash = (Get-FileHash -LiteralPath 'pnpm-lock.yaml' -Algorithm SHA256).Hash.ToLowerInvariant()\n$phase1FinalRefs = @($phase1FinalManifest.contracts.v1,$phase1FinalManifest.contracts.v2,$phase1FinalManifest.mocks.v1,$phase1FinalManifest.mocks.v2,$phase1FinalManifest.businessCase,$phase1FinalManifest.assertions,$phase1FinalManifest.migrationMapping)\nforeach ($phase1FinalRef in $phase1FinalRefs) { $phase1ActualHash = (Get-FileHash -LiteralPath ('examples/fixtures/mercurypay/' + $phase1FinalRef.path) -Algorithm SHA256).Hash.ToLowerInvariant(); if ($phase1ActualHash -ne $phase1FinalRef.sha256 -or -not $phase1FinalReport.Contains($phase1ActualHash)) { throw ('Report/artifact digest mismatch: ' + $phase1FinalRef.path) } }\nif (-not $phase1FinalReport.Contains($phase1FinalLockHash) -or -not $phase1FinalReport.Contains($phase1FinalManifest.treeDigest)) { throw 'Report digest missing' }\n$phase1FinalSecretMatches = @(Select-String -LiteralPath $phase1FinalFiles -Pattern '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----','ghp_[A-Za-z0-9]{30,}','github_pat_[A-Za-z0-9_]{30,}','sk-proj-[A-Za-z0-9_-]{20,}','AKIA[A-Z0-9]{16}' -ErrorAction Stop)\n[pscustomobject]@{SourceFiles=$phase1FinalFiles.Count;ReportedArtifactHashesMatched=$phase1FinalRefs.Count;LockHash=$phase1FinalLockHash;SecretPatternMatches=$phase1FinalSecretMatches.Count;GitInitialized=(Test-Path -LiteralPath '.git')} | ConvertTo-Json\nif ($phase1FinalSecretMatches.Count -gt 0 -or (Test-Path -LiteralPath '.git')) { exit 1 }",
+      "wall_time_seconds": 2.6583904,
+      "exit_code": 0,
+      "original_token_count": 89,
+      "output": "PHASE_1_REPORT.md 111ms\ndocs/dependencies.md 15ms (unchanged)\n$ prettier --check .\nChecking formatting...\nAll matched files use Prettier code style!\n{\r\n  \"SourceFiles\": 69,\r\n  \"ReportedArtifactHashesMatched\": 7,\r\n  \"LockHash\": \"5a94bfab1b82bdd2913eca84619cf5e71aafa107410bd2642e19b5f66d747df5\",\r\n  \"SecretPatternMatches\": 0,\r\n  \"GitInitialized\": false\r\n}\r\n"
+    },
+    {
+      "id": "closeout-copy-read",
+      "cmd": "rg -n -A 4 -B 4 'retires' apps/web/app/page.tsx",
+      "wall_time_seconds": 0.3980368,
+      "exit_code": 0,
+      "original_token_count": 116,
+      "output": "68-          <div className=\"change-summary\">\n69-            <span className=\"change-indicator\" aria-hidden=\"true\" />\n70-            <p>\n71-              <strong>A new route. A nested customer field.</strong> The synthetic v2 contract\n72:              retires the charge route and defines a payment request. Their migration relationship\n73-              is curated ground truth.\n74-            </p>\n75-          </div>\n76-          <div className=\"panel-footer\">\n"
+    },
+    {
+      "id": "final-attribution-gate",
+      "cmd": "corepack pnpm exec prettier --write apps/web/app/page.tsx PHASE_1_REPORT.md\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\ncorepack pnpm check",
+      "wall_time_seconds": 10.0087965,
+      "original_token_count": 169,
+      "output": "apps/web/app/page.tsx 98ms (unchanged)\nPHASE_1_REPORT.md 155ms (unchanged)\n$ corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm build && corepack pnpm smoke\n$ corepack pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit\nScope: 4 of 5 workspace projects\npackages/core typecheck$ tsc --noEmit\npackages/core typecheck: Done\napps/demo-shop typecheck$ tsc --noEmit\nexamples/fixtures/mercurypay typecheck$ tsc --noEmit\napps/demo-shop typecheck: Done\nexamples/fixtures/mercurypay typecheck: Done\napps/web typecheck$ tsc --noEmit\napps/web typecheck: Done\n$ eslint . --max-warnings 0\n"
+    },
+    {
+      "id": "final-attribution-gate-completion",
+      "operation": "poll",
+      "wall_time_seconds": 1.19E-05,
+      "exit_code": 0,
+      "original_token_count": 438,
+      "output": "$ prettier --check .\nChecking formatting...\nAll matched files use Prettier code style!\n$ vitest run\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  4 passed (4)\n      Tests  77 passed (77)\n   Start at  13:32:32\n   Duration  410ms (import 53%, transform 34%, tests 10%, worker 3%)\n\n$ vitest run tests/fixtures\n\n RUN  v5.0.3 A:/DriftReplay\n\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  13:32:33\n   Duration  330ms (transform 43%, import 40%, tests 15%, worker 2%)\n\n$ corepack pnpm --filter @driftreplay/web build\n$ node ../../scripts/next.mjs build\n▲ Next.js 16.4.0 (Turbopack)\n✓ Running next.config.mjs took 16ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 224ms\n  Running TypeScript ...\n  Finished TypeScript in 1470ms ...\n  Collecting page data using 7 workers ...\n  Generating static pages using 7 workers (0/6) ...\n  Generating static pages using 7 workers (1/6) \r\n  Generating static pages using 7 workers (2/6) \r\n  Generating static pages using 7 workers (4/6) \r\n✓ Generating static pages using 7 workers (6/6) in 678ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├ ○ /evidence\n├ ○ /fixtures/mercurypay\n└ ○ /status\n\n\n○  (Static)  prerendered as static content\n\n$ node scripts/smoke.mjs\nPASS /: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /fixtures/mercurypay: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /evidence: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS /status: HTTP 200; phase/synthetic labels; semantic main; local resources\nPASS missing page: 404; unsupported method: 405\n6 local HTTP smoke checks passed. No replay or real-provider validation performed.\n"
+    }
+  ],
+  "publicationNote": "Local user/attachment paths use placeholders; session/chunk identifiers and duplicated external-document/tool-guidance read output were removed. Test/build outcomes are unchanged. Originals remain in ignored .local/publication."
+}

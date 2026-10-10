@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1",
+  "id": "mercurypay-synthetic-s1",
+  "synthetic": true,
+  "kind": "behavior-reference-data",
+  "execution": "not-started",
+  "contractId": "mercurypay-synthetic-contract-v1",
+  "requestValidation": "reject-any-schema-violation",
+  "route": { "method": "POST", "path": "/v1/charges" },
+  "requestExample": {
+    "customer_email": "shopper@example.invalid",
+    "amount": 2599,
+    "currency": "USD"
+  },
+  "success": {
+    "httpStatus": 201,
+    "body": {
+      "transactionId": "syn_txn_checkout_001",
+      "status": "succeeded",
+      "amount": 2599,
+      "currency": "USD"
+    }
+  },
+  "invalidRequest": { "httpStatus": 400, "code": "SYNTHETIC_INVALID_REQUEST" },
+  "unknownRoute": { "httpStatus": 404, "code": "SYNTHETIC_ROUTE_NOT_FOUND" },
+  "retiredRoutes": []
+}

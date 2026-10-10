@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1",
+  "id": "synthetic-checkout-001",
+  "synthetic": true,
+  "description": "Provider-independent checkout input. The adapter changes later; these business values remain fixed.",
+  "input": { "email": "shopper@example.invalid", "amountMinor": 2599, "currency": "USD" }
+}

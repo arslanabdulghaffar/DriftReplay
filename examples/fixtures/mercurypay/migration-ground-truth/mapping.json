@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1",
+  "synthetic": true,
+  "provenance": "curated-synthetic-ground-truth",
+  "description": "Owner-specified synthetic migration relationship transcribed into fixture data. Removed and added operations alone cannot establish a semantic rename.",
+  "mappings": [
+    {
+      "id": "synthetic-operation-migration",
+      "kind": "operation",
+      "from": {
+        "contractId": "mercurypay-synthetic-contract-v1",
+        "pointer": "/paths/~1v1~1charges/post"
+      },
+      "to": {
+        "contractId": "mercurypay-synthetic-contract-v2",
+        "pointer": "/paths/~1v2~1payments/post"
+      }
+    },
+    {
+      "id": "synthetic-customer-email-migration",
+      "kind": "request-property",
+      "from": {
+        "contractId": "mercurypay-synthetic-contract-v1",
+        "pointer": "/paths/~1v1~1charges/post/requestBody/content/application~1json/schema/properties/customer_email"
+      },
+      "to": {
+        "contractId": "mercurypay-synthetic-contract-v2",
+        "pointer": "/paths/~1v2~1payments/post/requestBody/content/application~1json/schema/properties/customer/properties/email"
+      }
+    }
+  ]
+}
