@@ -17,8 +17,9 @@ const boundaries = [
   },
   {
     capability: "Durable workflows and storage",
-    scope: "Later phase",
-    detail: "No hosted database, job scheduler, or cloud storage connection.",
+    scope: "Local CLI available",
+    detail:
+      "Phase 3 persists static investigations in local PostgreSQL with captured inputs, cancellation and recovery. This static dashboard has no live database connection.",
   },
   {
     capability: "Fixture runtime replay",

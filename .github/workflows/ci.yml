@@ -1,4 +1,4 @@
-name: Local foundation and deterministic analysis checks
+name: Foundation, deterministic analysis and durable investigation checks
 
 on:
   push:
@@ -11,10 +11,29 @@ jobs:
   foundation:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17.11-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+        env:
+          POSTGRES_DB: driftreplay_phase3
+          POSTGRES_PASSWORD: synthetic-ci-bootstrap-only
+        ports:
+          - 127.0.0.1:54329:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d driftreplay_phase3"
+          --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       CI: "true"
       NEXT_TELEMETRY_DISABLED: "1"
       COREPACK_DEFAULT_TO_LATEST: "0"
+      DRIFT_DB_HOST: "127.0.0.1"
+      DRIFT_DB_PORT: "54329"
+      DRIFT_DB_DATABASE: driftreplay_phase3
+      DRIFT_DB_USER: drift_runtime
+      DRIFT_DB_PASSWORD: synthetic-ci-runtime-only
+      DRIFT_MIGRATION_USER: drift_migrator
+      DRIFT_MIGRATION_PASSWORD: synthetic-ci-migrator-only
+      DRIFT_BOOTSTRAP_PASSWORD: synthetic-ci-bootstrap-only
     steps:
       - name: Read source without retaining checkout credentials
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,6 +48,10 @@ jobs:
           package-manager-cache: false
       - name: Install pinned packages without lifecycle scripts
         run: corepack pnpm install --frozen-lockfile --ignore-scripts
+      - name: Prepare isolated CI database roles
+        run: node packages/durable/src/ci-bootstrap.ts
+      - name: Migrate real PostgreSQL
+        run: corepack pnpm durable:migrate
       - name: Strict TypeScript checks
         run: corepack pnpm typecheck
       - name: Lint
@@ -43,6 +66,8 @@ jobs:
         run: corepack pnpm test:analysis
       - name: Actual local analysis CLI
         run: corepack pnpm analyze:fixture
+      - name: Real PostgreSQL durability, concurrency and security gate
+        run: corepack pnpm test:durable
       - name: Production static build
         run: corepack pnpm build
       - name: Local HTTP smoke checks

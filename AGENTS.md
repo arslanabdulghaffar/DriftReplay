@@ -47,12 +47,24 @@ as a workaround for a blocked push.
 
 ## Current engineering boundary
 
-Phase 1 is the published synthetic foundation. Phase 2 is explicitly authorized only on
-`phase/02-deterministic-analysis`: bounded local ingestion, deterministic comparison, lexical
-TypeScript evidence and conditional impact mapping. No replay, agents, repair, GitHub App,
-provider monitoring or production security capability may be represented as implemented.
-Phase 3 requires separate explicit authorization. Include `test:analysis` and `analyze:fixture`
-with the complete validation gates for Phase 2 and subsequent changes to the analyzer.
+Phase 1 and Phase 2 are published. Phase 3 is explicitly authorized only on
+`phase/03-durable-investigations`, from approved Phase 2 commit
+`6a67eb871fcebd015acccb5fdce63d04c95d0097`. It adds local PostgreSQL durable coordination,
+immutable captured evidence, a local CLI and real database/fault tests. Preserve the Phase 2
+analyzer unchanged. No replay, models, repair, GitHub App, provider monitoring or production
+security capability may be represented as implemented. The dashboard remains static.
+Phase 4 requires separate explicit authorization. Include `test:analysis`, `analyze:fixture`
+and the real PostgreSQL `test:durable` gate with complete validation. Missing PostgreSQL is
+a failed environment gate; do not substitute mocks or claim local success from CI alone.
+
+The owner approved verified EDB PostgreSQL 17 Windows x64 binaries only beneath ignored
+`.local`, a disposable `127.0.0.1` test database and separate least-privilege runtime/migration
+accounts. Never commit credentials, downloaded binaries or database files. No Windows service,
+system PATH change, Docker/WSL installation, public listener or cloud provisioning is authorized.
+Stop if further system installation or permissions are required. Follow ADR 0003 and the
+durable operations/security documents. Keep migration checksums immutable once applied; use
+forward migrations and isolated synthetic test schemas. Explicitly report remaining local
+filesystem, retention, process-interruption and power-loss limitations.
 MercuryPay is synthetic. Protect its fixed business input and oracle; do not change tests
 or fixture assertions merely to obtain a passing result.
 

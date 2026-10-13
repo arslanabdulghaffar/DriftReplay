@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-13T16:18:39.697Z",
+  "phase": 3,
+  "branch": "phase/03-durable-investigations",
+  "approvedParent": "6a67eb871fcebd015acccb5fdce63d04c95d0097",
+  "unchangedMain": "0659e16936f4af63f7b5bd2220fecbafe8c1a17b",
+  "local": {
+    "platform": "Windows",
+    "shell": "PowerShell 7.6",
+    "node": "24.21.0",
+    "corepack": "0.36.0",
+    "pnpm": "11.25.0",
+    "postgres": "17.11",
+    "listener": "127.0.0.1:54329",
+    "runtimeSuperuser": false,
+    "migrationVersions": [
+      1,
+      2,
+      3
+    ]
+  },
+  "postgresDownload": {
+    "source": "https://get.enterprisedb.com/postgresql/postgresql-17.11-5-windows-x64-binaries.zip",
+    "publisherChecksum": "https://github.com/EnterpriseDB/edb-installers/issues/731#issuecomment-6014410619",
+    "sha256": "80379b2c04d51c30225532e0ae04509899141e9957ed096fe749d7fd9df8f82f",
+    "bytes": 381531864,
+    "expandedBytes": 1002085601,
+    "verifiedExtractedFiles": 20489,
+    "verification": "publisher-published checksum; not signed manifest; inspected utilities unsigned"
+  },
+  "checks": [
+    {
+      "command": "corepack pnpm install --frozen-lockfile --ignore-scripts",
+      "exit": 0
+    },
+    {
+      "command": "corepack pnpm check",
+      "exit": 0
+    },
+    {
+      "command": "vitest run",
+      "passed": 496,
+      "files": 23,
+      "skipped": 0,
+      "seconds": 38.17
+    },
+    {
+      "command": "test:fixtures",
+      "passed": 37,
+      "files": 1,
+      "seconds": 0.507
+    },
+    {
+      "command": "test:analysis",
+      "passed": 327,
+      "files": 10,
+      "seconds": 2.23
+    },
+    {
+      "command": "test:durable",
+      "passed": 92,
+      "files": 9,
+      "seconds": 39.28
+    },
+    {
+      "command": "analyze:fixture",
+      "exit": 0,
+      "resultDigest": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+      "elapsedMs": 363
+    },
+    {
+      "command": "build",
+      "exit": 0
+    },
+    {
+      "command": "smoke",
+      "passed": 6
+    },
+    {
+      "command": "corepack pnpm audit --json",
+      "exit": 0,
+      "advisories": 0,
+      "dependencyEntries": 257
+    }
+  ],
+  "metrics": {
+    "observedAt": "2026-10-13T08:48:42.959Z",
+    "node": "v24.21.0",
+    "submittedMs": 145.89549999999997,
+    "completedMs": 937.7253000000001,
+    "verificationMs": 365.96979999999985,
+    "parentRssSampleBytes": 149852160,
+    "parentMaxRssKiB": 200128,
+    "footprint": {
+      "database_bytes": "16324275",
+      "schema_bytes": "589824"
+    },
+    "run": {
+      "runId": "2e43a2f2-7ec7-4a70-9ec8-b4b2485918dc",
+      "workspaceId": "aa162950-5261-42cf-8c7a-15b79876dc10",
+      "requestKey": "da81684bb13af163d8a73aaa8684d23cd9d6b83bcb726aafe30364114b51009b",
+      "inputSetDigest": "4ab5daa915c58031d864e275311b291e3e793ed9c73095871218c7640d88e6c6",
+      "state": "ANALYSIS_COMPLETE",
+      "stateVersion": 3,
+      "engine": {
+        "name": "driftreplay-openapi-subset",
+        "version": "0.2.0",
+        "typescript": "5.9.3"
+      },
+      "policyId": "local-analysis-v2",
+      "policyHash": "a2a841e15fdb994cc4c47a1f7a4024ddc82d2c9e1cf1750cac233f3bb2220c09",
+      "limits": {
+        "maxAttempts": 3,
+        "computeMs": 120000,
+        "outputBytes": 8388608,
+        "durationMs": 120000,
+        "leaseMs": 5000
+      },
+      "createdAt": "2026-10-13T08:48:41.264Z",
+      "updatedAt": "2026-10-13T08:48:42.064Z",
+      "deadline": "2026-10-13T08:50:41.264Z",
+      "finishedAt": "2026-10-13T08:48:42.064Z",
+      "cancelRequestedAt": null,
+      "resultDigest": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+      "failureCode": null,
+      "attempts": 1,
+      "generation": 1
+    },
+    "counts": {
+      "deltas": 2,
+      "usages": 1,
+      "impacts": 1,
+      "unresolved": 1
+    },
+    "inputBytes": 7303,
+    "artifacts": [
+      {
+        "role": "report",
+        "sha256": "c8a5cb9ecf81f09a9b1b5517871a3d6553fa9f729a98cdb4430c61d57a494d75",
+        "byteLength": 3697
+      },
+      {
+        "role": "result",
+        "sha256": "8b70620e0b9d259831d727fa6cf9f9a92abef299e7dd49dfbad763642a940f81",
+        "byteLength": 8732
+      }
+    ],
+    "trace": {
+      "state": "ANALYSIS_COMPLETE",
+      "stateVersion": 3,
+      "attempts": 1,
+      "generation": 1,
+      "inputSetDigest": "4ab5daa915c58031d864e275311b291e3e793ed9c73095871218c7640d88e6c6",
+      "events": [
+        {
+          "sequence": 0,
+          "previousState": null,
+          "state": "QUEUED",
+          "stateVersion": 0,
+          "actor": "operator",
+          "reason": "SUBMITTED",
+          "at": "2026-10-13T08:48:41.280Z",
+          "generation": null
+        },
+        {
+          "sequence": 1,
+          "previousState": "QUEUED",
+          "state": "CLAIMED",
+          "stateVersion": 1,
+          "actor": "worker",
+          "reason": "CLAIMED",
+          "at": "2026-10-13T08:48:41.297Z",
+          "generation": 1
+        },
+        {
+          "sequence": 2,
+          "previousState": "CLAIMED",
+          "state": "ANALYZING",
+          "stateVersion": 2,
+          "actor": "worker",
+          "reason": "ANALYSIS_STARTED",
+          "at": "2026-10-13T08:48:41.302Z",
+          "generation": 1
+        },
+        {
+          "sequence": 3,
+          "previousState": "ANALYZING",
+          "state": "ANALYSIS_COMPLETE",
+          "stateVersion": 3,
+          "actor": "worker",
+          "reason": "RESULT_VERIFIED",
+          "at": "2026-10-13T08:48:42.064Z",
+          "generation": 1
+        }
+      ],
+      "budget": {
+        "maxRuns": 1000,
+        "maxWorkers": 2,
+        "maxBytes": 134217728,
+        "maxComputeMs": 1200000,
+        "runCount": 1,
+        "activeWorkers": 0,
+        "reservedBytes": 0,
+        "consumedBytes": 19732,
+        "reservedComputeMs": 0,
+        "consumedComputeMs": 754
+      }
+    }
+  },
+  "serverCrash": {
+    "started": "2026-10-13T16:16:47.631Z",
+    "finished": "2026-10-13T16:16:49.179Z",
+    "method": "pg_ctl immediate stop and restart of authorized disposable cluster",
+    "settings": {
+      "listen": "127.0.0.1",
+      "port": "54329",
+      "fsync": "on",
+      "synchronous_commit": "on",
+      "full_page_writes": "on",
+      "database": "driftreplay_phase3"
+    },
+    "committedMarkerSurvived": true,
+    "uncommittedMarkerRolledBack": true,
+    "persistedRunEventsAndBudgetUnchanged": true,
+    "runId": "960b9a75-080b-40e7-a387-7bd85883ae5e",
+    "resultDigest": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+    "observedErrors": [
+      "ECONNRESET",
+      "DISCONNECTED"
+    ],
+    "scope": "process/server interruption; not power-loss test"
+  },
+  "additionalFootprintSamples": {
+    "postgresProcessCount": 6,
+    "aggregateWorkingSetBytes": 32653312,
+    "clusterFileBytes": 107497497,
+    "caveat": "observations at different times; shared working-set pages may be counted more than once; not a benchmark"
+  },
+  "newDependencyManifests": [
+    {
+      "name": "@types/pg",
+      "version": "8.23.1",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pg",
+      "version": "8.23.1",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pg-cloudflare",
+      "version": "1.4.1",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pg-connection-string",
+      "version": "2.14.1",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pg-int8",
+      "version": "1.0.1",
+      "license": "ISC",
+      "hooks": []
+    },
+    {
+      "name": "pg-pool",
+      "version": "3.14.0",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pg-protocol",
+      "version": "1.16.1",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pg-types",
+      "version": "2.2.0",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "pgpass",
+      "version": "1.0.5",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "postgres-array",
+      "version": "2.0.0",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "postgres-bytea",
+      "version": "1.0.1",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "postgres-date",
+      "version": "1.0.7",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "postgres-interval",
+      "version": "1.2.0",
+      "license": "MIT",
+      "hooks": []
+    },
+    {
+      "name": "split2",
+      "version": "4.2.0",
+      "license": "ISC",
+      "hooks": []
+    },
+    {
+      "name": "xtend",
+      "version": "4.0.2",
+      "license": "MIT",
+      "hooks": []
+    }
+  ],
+  "changedFiles": [
+    ".env.example",
+    ".github/workflows/ci.yml",
+    "AGENTS.md",
+    "PHASE_3_REPORT.md",
+    "README.md",
+    "apps/web/app/status/page.tsx",
+    "docs/adr/0003-durable-coordination.md",
+    "docs/dependencies.md",
+    "docs/durable-operations.md",
+    "docs/durable-state-machine.md",
+    "docs/durable-storage-and-retention.md",
+    "docs/durable-threat-failure-matrix.md",
+    "docs/phase-gates.md",
+    "docs/security-boundaries.md",
+    "docs/supported-scope.md",
+    "docs/validation/phase-3-verification.json",
+    "package.json",
+    "packages/durable/package.json",
+    "packages/durable/src/analysis-adapter.test.ts",
+    "packages/durable/src/analysis-adapter.ts",
+    "packages/durable/src/analysis-worker.ts",
+    "packages/durable/src/artifacts.test.ts",
+    "packages/durable/src/artifacts.ts",
+    "packages/durable/src/ci-bootstrap.ts",
+    "packages/durable/src/cli.ts",
+    "packages/durable/src/config.test.ts",
+    "packages/durable/src/config.ts",
+    "packages/durable/src/contracts.ts",
+    "packages/durable/src/coordinator.ts",
+    "packages/durable/src/db/client.ts",
+    "packages/durable/src/db/database.test.ts",
+    "packages/durable/src/db/migrate.ts",
+    "packages/durable/src/db/migration-status.test.ts",
+    "packages/durable/src/db/migration-status.ts",
+    "packages/durable/src/db/migrations/001_initial.sql",
+    "packages/durable/src/db/migrations/002_accounting.sql",
+    "packages/durable/src/db/migrations/003_storage_guards.sql",
+    "packages/durable/src/identity.test.ts",
+    "packages/durable/src/identity.ts",
+    "packages/durable/src/service.ts",
+    "packages/durable/tsconfig.json",
+    "pnpm-lock.yaml",
+    "scripts/local-postgres.ps1",
+    "tests/durable/cli.test.ts",
+    "tests/durable/helpers.ts",
+    "tests/durable/integration.test.ts",
+    "tests/durable/process-harness.ts",
+    "tests/durable/process.test.ts"
+  ],
+  "publication": {
+    "status": "pending",
+    "implementationSha": null,
+    "ci": null
+  },
+  "scope": {
+    "replayExecuted": false,
+    "repairExecuted": false,
+    "modelInvocations": 0,
+    "cloudProvisioned": false,
+    "mainMerged": false,
+    "phase4Authorized": false
+  },
+  "publicationAudit": {
+    "observedAt": "2026-10-13T16:19:22.317Z",
+    "files": 158,
+    "bytes": 1213071,
+    "findings": [],
+    "originalAnalyzerCoreDemoFixturesTestsAndReportsUnchanged": true,
+    "scope": "all proposed files before receipt metadata; exact bootstrap/runtime/migration passwords checked without printing"
+  }
+}

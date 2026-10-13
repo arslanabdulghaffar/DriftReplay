@@ -21,7 +21,19 @@
     "build": "corepack pnpm --filter @driftreplay/web build",
     "smoke": "node scripts/smoke.mjs",
     "preview": "node scripts/preview.mjs",
-    "check": "corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm build && corepack pnpm smoke"
+    "check": "corepack pnpm typecheck && corepack pnpm lint && corepack pnpm format:check && corepack pnpm test && corepack pnpm test:fixtures && corepack pnpm test:analysis && corepack pnpm test:durable && corepack pnpm analyze:fixture && corepack pnpm build && corepack pnpm smoke",
+    "durable:doctor": "node packages/durable/src/cli.ts doctor",
+    "durable:migrate": "node packages/durable/src/cli.ts migrate",
+    "durable:submit": "node packages/durable/src/cli.ts submit",
+    "durable:worker": "node packages/durable/src/cli.ts worker",
+    "durable:list": "node packages/durable/src/cli.ts list",
+    "durable:status": "node packages/durable/src/cli.ts status",
+    "durable:events": "node packages/durable/src/cli.ts events",
+    "durable:cancel": "node packages/durable/src/cli.ts cancel",
+    "durable:verify": "node packages/durable/src/cli.ts verify",
+    "durable:reconcile": "node packages/durable/src/cli.ts reconcile",
+    "durable:gc": "node packages/durable/src/cli.ts gc",
+    "test:durable": "vitest run packages/durable tests/durable"
   },
   "devDependencies": {
     "@driftreplay/core": "workspace:0.1.0",

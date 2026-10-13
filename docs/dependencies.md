@@ -1,7 +1,8 @@
 # Toolchain and dependency decisions
 
-Reviewed on 2026-10-10 using official documentation and npm package metadata. Installation is
-not a security audit. Exact transitive identities and integrity values are in `pnpm-lock.yaml`.
+The initial toolchain review was recorded on 2026-10-10 using official documentation and npm
+package metadata. Phase 2 and Phase 3 additive decisions appear below. Installation is not a
+security audit. Exact transitive identities and integrity values are in `pnpm-lock.yaml`.
 
 | Component                | Pin     | Reason / declared license                                     |
 | ------------------------ | ------- | ------------------------------------------------------------- |
@@ -22,9 +23,10 @@ not a security audit. Exact transitive identities and integrity values are in `p
 | @types/node              | 24.10.0 | Node 24 type definitions; MIT                                 |
 | @types/react / react-dom | 19.3.0  | React types; MIT                                              |
 
-No UI component library, agent framework, database client, provider SDK, browser automation
-runner, container SDK, or OpenAPI diff binary is installed. Native platform packages are supplied
-as dependency artifacts; no dependency lifecycle script has been approved.
+The Phase 1 selection installed no UI component library, agent framework, database client,
+provider SDK, browser automation runner, container SDK or OpenAPI diff binary. Phase 3 adds the
+specific database client described below. Native platform packages are supplied as dependency
+artifacts; no dependency lifecycle script has been approved.
 
 ## Installation decisions and observed caveats
 
@@ -89,3 +91,54 @@ The oasdiff documentation was evaluated, but no binary was installed or executed
 fabricated checksum or release pin for an unused tool. [ADR 0002](adr/0002-deterministic-analysis.md)
 records the intentionally reduced comparator choice. Phase 2 actual advisory/inventory results
 and remaining project-license decision are recorded in its completion report.
+
+## Phase 3 additive dependency and runtime decision
+
+`@driftreplay/durable@0.3.0` is a private workspace package. It reuses
+`@driftreplay/analysis@0.2.0` and Zod **4.6.5** and adds exactly pinned **pg 8.23.1** (MIT) with
+**@types/pg 8.23.1** (MIT). The reviewed package metadata declares no install lifecycle hooks;
+pg declares Node >=16 and runs on the existing pinned Node 24 toolchain. The committed lockfile
+records the resolved transitive packages and integrity values. Disabled dependency scripts,
+frozen installs and existing build-policy restrictions remain in force.
+
+[ADR 0003](adr/0003-durable-coordination.md) selects explicit SQL transactions and versioned
+migrations. Drizzle ORM **0.45.4** (Apache-2.0) and drizzle-kit **0.31.11** (MIT) were evaluated
+but not installed: their extra tooling does not remove the need to review queue locking,
+fencing and atomic settlement SQL. No Inngest runtime, hosted workflow SDK, cloud database SDK,
+model framework, container runtime or remote execution tooling is introduced.
+
+The owner separately authorized PostgreSQL **17.11**, EDB Windows x64 packaging revision **5**,
+under ignored `.local/postgres-17.11-5/pgsql`. The archive
+`postgresql-17.11-5-windows-x64-binaries.zip` was downloaded from the official EDB distribution
+and matched this publisher-published SHA-256 before any downloaded binary executed:
+
+```text
+80379b2c04d51c30225532e0ae04509899141e9957ed096fe749d7fd9df8f82f
+```
+
+The provenance is the [EDB binary archive page](https://www.enterprisedb.com/download-postgresql-binaries)
+and the exact [publisher checksum comment in EDB issue 731](https://github.com/EnterpriseDB/edb-installers/issues/731#issuecomment-6014410619).
+The comment author's delegated repository authority was inferred from their recorded ability
+to close issues opened by other users in the EDB repository. That is publisher-published
+checksum verification, **not** a cryptographically signed checksum manifest. The available
+Windows server executables are unsigned; a matching ZIP checksum is not an Authenticode
+signature for each component. Do not disable Windows application control to execute them.
+
+The runtime is not an npm dependency and is not redistributed in Git. Its archive, extracted
+binaries, database files, private credentials and logs remain ignored. The authorized setup
+does not install a Windows service, change system PATH, install Docker/WSL or provision a
+cloud resource. Ubuntu CI separately uses the PostgreSQL 17.11 Bookworm image pinned by digest
+in the workflow, with synthetic credentials for that job only. Local Windows verification
+and hosted Linux results are distinct evidence.
+
+PostgreSQL and bundled third-party notices require their own review before redistribution;
+the pg driver's MIT declaration does not license every binary in the EDB archive. No project
+license or general redistribution approval is selected here. Final Phase 3 package inventory,
+advisory results, binary verification evidence and executed CI outcomes belong in
+`PHASE_3_REPORT.md`; this dependency decision does not assert that those final gates have passed.
+
+The installed Phase 3 addition was inventoried from all 15 resolved package manifests: 13 MIT,
+2 ISC (`pg-int8@1.0.1`, `split2@4.2.0`), with no preinstall/install/postinstall/prepare hooks.
+The optional `pg-cloudflare` package is present transitively but no Cloudflare service or
+adapter is configured. `pg-native` is not installed. The frozen install keeps lifecycle scripts
+disabled; advisory results are recorded separately in the phase report.
