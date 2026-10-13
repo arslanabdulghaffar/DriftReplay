@@ -174,3 +174,9 @@ all concurrent filesystem races.
 Missing/older migrations, checksum mismatch and unknown future versions have distinct error
 codes and do not report readiness. This verifies the ledger, not an independent reconstruction
 of every live DDL object against a hostile database owner.
+
+Doctor reports `loopbackOnlyConnection` for the enforced client destination and
+`serverAddressIsLoopback` separately. A mapped CI container can report the latter as false
+while the runner connects exclusively to 127.0.0.1. Role and connection-policy checks are
+unconditional. This diagnostic is not a scan of every server listener; the native Windows
+helper independently checks the approved server PID's listeners.

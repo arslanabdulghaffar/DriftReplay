@@ -277,11 +277,11 @@ Raw outputs/credentials remain ignored under `.local`.
 | `corepack pnpm install --frozen-lockfile --ignore-scripts` | Exit 0; lockfile unchanged, lifecycle scripts disabled                                  |
 | `corepack pnpm check`                                      | Exit 0; all constituent gates completed                                                 |
 | Strict TypeScript / ESLint / Prettier                      | PASS; zero lint warnings                                                                |
-| Full `vitest run`                                          | **496/496**, **23/23 files**, 38.17 s; zero skipped                                     |
-| `test:fixtures`                                            | **37/37**, 507 ms                                                                       |
-| `test:analysis`                                            | **327/327**, **10 files**, 2.23 s                                                       |
-| `test:durable`                                             | **92/92**, **9 files**, 39.28 s                                                         |
-| `analyze:fixture`                                          | Exit 0; unchanged digest/counts; observed processing 363 ms                             |
+| Full `vitest run`                                          | **496/496**, **23/23 files**, 27.82 s; zero skipped                                     |
+| `test:fixtures`                                            | **37/37**, 466 ms                                                                       |
+| `test:analysis`                                            | **327/327**, **10 files**, 2.62 s                                                       |
+| `test:durable`                                             | **92/92**, **9 files**, 29.71 s                                                         |
+| `analyze:fixture`                                          | Exit 0; unchanged digest/counts; observed processing 430 ms                             |
 | Production static build                                    | PASS; four application routes and static not-found                                      |
 | HTTP smoke                                                 | **6/6**, including 404 and unsupported-method 405                                       |
 | `durable:migrate` / `durable:doctor`                       | Exit 0; real migrated PG17.11, versions 1/2/3, runtime nonsuperuser                     |
@@ -311,6 +311,15 @@ Review additionally fixed query-pool starvation by advisory-lock waiters, in-tra
 expiry, pending-GC recovery, remaining compute budgets, measured versus estimated accounting,
 interrupted-cancellation charge and heartbeat error classification. The added regression tests
 passed before the comprehensive final suite. No oracle or security guard was weakened.
+
+The initial Ubuntu CI run [38429621727](https://github.com/arslanabdulghaffar/DriftReplay/actions/runs/38429621727)
+passed setup/migration/type/lint/format, then failed **1/496** tests (495 passed): doctor
+reported DATABASE_PERMISSION_DENIED because it confused PostgreSQL's backend address behind
+a container port mapping with the client's literal loopback destination. Later gates were
+skipped. The correction preserves literal-127.0.0.1 configuration and role checks, and reports
+serverAddressIsLoopback separately. No CI-only permission bypass was added. The version
+assertion now permits a distribution suffix after the pinned 17.11 version. This follows
+[GitHub's documented service-container port mapping](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers).
 
 ## I. SECURITY AND PRIVACY
 

@@ -74,23 +74,25 @@ async function main(): Promise<void> {
     if (command === "doctor") {
       const server = await db.query<{
         version: string;
-        address: string;
+        address: string | null;
         superuser: boolean;
         privileged: boolean;
       }>(
         "SELECT current_setting('server_version') AS version, host(inet_server_addr()) AS address, rolsuper AS superuser, (rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls) AS privileged FROM pg_roles WHERE rolname=current_user",
       );
-      if (
-        server.rows[0]?.address !== "127.0.0.1" ||
-        server.rows[0]?.superuser ||
-        server.rows[0]?.privileged
-      )
+      const observed = server.rows[0];
+      if (!observed || observed.superuser !== false || observed.privileged !== false)
         throw new DurableError("DATABASE_PERMISSION_DENIED");
       const schema = await assertMigrationStatus(db);
+      // Configuration still permits only the literal client target 127.0.0.1. A local
+      // container's port mapping can NAT that connection to a bridge address at PostgreSQL;
+      // report the backend observation separately without exposing its internal IP.
       output({
         database: "ready",
-        version: server.rows[0].version,
+        version: observed.version,
         loopbackOnlyConnection: true,
+        serverAddressIsLoopback:
+          /^127\./.test(observed.address ?? "") || observed.address === "::1",
         runtimeSuperuser: false,
         ...schema,
         trust: "single-owner-local",

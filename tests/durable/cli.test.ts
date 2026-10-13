@@ -5,7 +5,7 @@ const execute = promisify(execFile);
 const cli = "packages/durable/src/cli.ts";
 
 describe("D25 D29: real local CLI privacy and connection diagnostics", () => {
-  it("doctor reports a real loopback PostgreSQL connection with a nonprivileged runtime role", async () => {
+  it("doctor reports the loopback client target separately from the server address observation", async () => {
     const { stdout, stderr } = await execute(process.execPath, [cli, "doctor"], {
       windowsHide: true,
     });
@@ -13,13 +13,15 @@ describe("D25 D29: real local CLI privacy and connection diagnostics", () => {
     const result: unknown = JSON.parse(stdout);
     expect(result).toMatchObject({
       database: "ready",
-      version: "17.11",
+      version: expect.stringMatching(/^17\.11(?:\s|$)/),
       loopbackOnlyConnection: true,
+      serverAddressIsLoopback: expect.any(Boolean),
       runtimeSuperuser: false,
       modelInvocations: 0,
     });
     expect(stdout).not.toContain("password");
     expect(stdout).not.toContain("A:\\");
+    expect(result).not.toHaveProperty("address");
   });
 
   it.each([

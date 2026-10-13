@@ -43,31 +43,31 @@
       "passed": 496,
       "files": 23,
       "skipped": 0,
-      "seconds": 38.17
+      "seconds": 27.82
     },
     {
       "command": "test:fixtures",
       "passed": 37,
       "files": 1,
-      "seconds": 0.507
+      "seconds": 0.466
     },
     {
       "command": "test:analysis",
       "passed": 327,
       "files": 10,
-      "seconds": 2.23
+      "seconds": 2.62
     },
     {
       "command": "test:durable",
       "passed": 92,
       "files": 9,
-      "seconds": 39.28
+      "seconds": 29.71
     },
     {
       "command": "analyze:fixture",
       "exit": 0,
       "resultDigest": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
-      "elapsedMs": 363
+      "elapsedMs": 430
     },
     {
       "command": "build",
@@ -382,7 +382,18 @@
   "publication": {
     "status": "pending",
     "implementationSha": null,
-    "ci": null
+    "ci": null,
+    "firstAttempt": {
+      "sha": "97ee0d56a55a10c5d8cf0e49c71e4063adf3fb52",
+      "tree": "51f0c2caa1625c41df615b7203043d62d0299f1d",
+      "files": 158,
+      "runId": 38429621727,
+      "conclusion": "failure",
+      "passedTests": 495,
+      "failedTests": 1,
+      "failedTest": "CLI doctor backend address mistaken for loopback client endpoint",
+      "laterGates": "skipped"
+    }
   },
   "scope": {
     "replayExecuted": false,
@@ -399,5 +410,60 @@
     "findings": [],
     "originalAnalyzerCoreDemoFixturesTestsAndReportsUnchanged": true,
     "scope": "all proposed files before receipt metadata; exact bootstrap/runtime/migration passwords checked without printing"
-  }
+  },
+  "preCorrectionLocalChecks": [
+    {
+      "command": "corepack pnpm install --frozen-lockfile --ignore-scripts",
+      "exit": 0
+    },
+    {
+      "command": "corepack pnpm check",
+      "exit": 0
+    },
+    {
+      "command": "vitest run",
+      "passed": 496,
+      "files": 23,
+      "skipped": 0,
+      "seconds": 38.17
+    },
+    {
+      "command": "test:fixtures",
+      "passed": 37,
+      "files": 1,
+      "seconds": 0.507
+    },
+    {
+      "command": "test:analysis",
+      "passed": 327,
+      "files": 10,
+      "seconds": 2.23
+    },
+    {
+      "command": "test:durable",
+      "passed": 92,
+      "files": 9,
+      "seconds": 39.28
+    },
+    {
+      "command": "analyze:fixture",
+      "exit": 0,
+      "resultDigest": "1926cf8adad96f725e1ff13196e25913e9adaf77bae9c9d5747381ba1d4c127c",
+      "elapsedMs": 363
+    },
+    {
+      "command": "build",
+      "exit": 0
+    },
+    {
+      "command": "smoke",
+      "passed": 6
+    },
+    {
+      "command": "corepack pnpm audit --json",
+      "exit": 0,
+      "advisories": 0,
+      "dependencyEntries": 257
+    }
+  ]
 }

@@ -52,6 +52,8 @@ jobs:
         run: node packages/durable/src/ci-bootstrap.ts
       - name: Migrate real PostgreSQL
         run: corepack pnpm durable:migrate
+      - name: Verify local database diagnostics
+        run: corepack pnpm durable:doctor
       - name: Strict TypeScript checks
         run: corepack pnpm typecheck
       - name: Lint
