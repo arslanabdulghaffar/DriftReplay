@@ -2,8 +2,9 @@
 
 ## A. PHASE 3 STATUS
 
-Local implementation and the comprehensive validation suite pass. Publication and hosted CI
-are pending; final GO for Phase 4 review is withheld until the exact pushed commit passes CI.
+**COMPLETE — GO for Phase 4 review only.** Local implementation, comprehensive validation,
+normal phase-branch publication and Ubuntu CI passed on the corrected implementation commit.
+The final documentation receipt is verified separately in the chat handoff.
 Phase 3 provides **local PostgreSQL durable static analysis only**. It does not run consumer
 code, reproduce a provider failure, generate a repair, call a model or operate a hosted service.
 
@@ -248,7 +249,7 @@ supplement the database tests. No durability test was replaced by an in-memory d
 | D27  | Fresh DB clients and independent processes preserve event order, settlement and verified evidence; PASS                                                            |
 | D28  | Dry-run nonmutation, protected references, interrupted pending deletion and audited tombstone; PASS                                                                |
 | D29  | Windows filesystem/link tests and explicit literal IPv4 policy; unsupported hostname/IPv6/socket configuration rejected; PASS locally                              |
-| D30  | All 404 prior tests plus 92 new tests pass locally; Ubuntu CI pending publication                                                                                  |
+| D30  | All 404 prior tests plus 92 new tests pass locally and on Ubuntu CI; PASS                                                                                          |
 
 The SQL-only coordinator tests intentionally use synthetic artifact metadata to isolate
 transaction enforcement. They do not prove real analysis; service and process suites run the
@@ -289,7 +290,7 @@ Raw outputs/credentials remain ignored under `.local`.
 | Resolved new dependency manifests                          | 15 packages: 13 MIT, 2 ISC; no install/prepare hooks                                    |
 | Phase 1/2 preservation                                     | No diff in original analysis/core/fixtures/demo/tests/reports                           |
 | Publication scan and whitespace                            | No credential/private-path/binary/unwanted-artifact findings; `git diff --check` passes |
-| Hosted Ubuntu CI                                           | Pending branch push; no success claimed yet                                             |
+| Hosted Ubuntu CI                                           | PASS on corrected implementation SHA; every job step succeeded (details below)          |
 
 Failures encountered and fixed are retained: initial initdb password argument parsing; initial
 TypeScript row/readonly/IPC callback typing and lint issues; PostgreSQL `42P08` parameter inference
@@ -320,6 +321,16 @@ skipped. The correction preserves literal-127.0.0.1 configuration and role check
 serverAddressIsLoopback separately. No CI-only permission bypass was added. The version
 assertion now permits a distribution suffix after the pinned 17.11 version. This follows
 [GitHub's documented service-container port mapping](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers).
+
+The corrected [Actions run 38430520989](https://github.com/arslanabdulghaffar/DriftReplay/actions/runs/38430520989)
+ran on Ubuntu 24.04 from `2026-10-13T16:26:34Z` through `16:28:11Z` and succeeded for
+`eca08b149b353e55f33ce905bdef6c8187f0d510`. All 22 job steps succeeded, including setup,
+frozen install, role bootstrap, migration, doctor, typecheck, lint, formatting, every test
+gate, actual analysis CLI, production build, six smoke checks and cleanup. Retrieved job logs
+confirm **496/496** tests across 23 files (18.97 s), fixtures **37/37** (258 ms), analysis
+**327/327** (2.41 s), and durable **92/92** (17.21 s). No test gate was skipped. Actual server
+version was `17.11 (Debian 17.11-1.pgdg12+2)`; doctor reported the constrained loopback client
+and a non-loopback container backend separately, with the runtime role unprivileged.
 
 ## I. SECURITY AND PRIVACY
 
@@ -387,17 +398,28 @@ in private evidence; public CLI summaries are not a blanket redaction guarantee 
 ## K. PUBLICATION
 
 Target branch: [phase/03-durable-investigations](https://github.com/arslanabdulghaffar/DriftReplay/tree/phase/03-durable-investigations).
-Implementation commit, remote tree equality and hosted CI are pending. No merge, PR, force push,
-deployment or release will be performed. The permanent phase-end publishing instructions remain
-in `AGENTS.md` and `docs/development-workflow.md`.
+Initial implementation commit: `97ee0d56a55a10c5d8cf0e49c71e4063adf3fb52`, directly parented by
+the approved Phase 2 SHA. Its CI failure is retained in H. Corrected implementation commit:
+**`eca08b149b353e55f33ce905bdef6c8187f0d510`**,
+[GitHub commit](https://github.com/arslanabdulghaffar/DriftReplay/commit/eca08b149b353e55f33ce905bdef6c8187f0d510).
+Normal push succeeded. `git ls-remote` matched the exact local SHA; GitHub's recursive tree
+`c65fe5220e6aff70046d49a3fdede9f5105fff5b` and all **158 tracked files** matched the local tree.
+A verification probe initially supplied a commit identifier where the tree identity was needed;
+querying the commit's actual tree confirmed equality. No history conflict existed.
 
-A subsequent documentation receipt may record the implementation SHA and its CI outcome.
+The corrected implementation's CI succeeded as detailed in H. The working tree was clean
+after its push and before this documentation receipt. Local and remote main remain
+`0659e16936f4af63f7b5bd2220fecbafe8c1a17b`. No merge, PR, force push, deployment or release
+was performed. Permanent phase-end publishing instructions remain in `AGENTS.md` and
+`docs/development-workflow.md`.
+
+This documentation receipt records the corrected implementation SHA and its CI outcome.
 That receipt cannot contain its own containing commit hash. The final chat handoff will provide
 the final pushed HEAD, exact remote equality, CI outcome and working-tree status.
 
 ## L. PHASE 4 DEPENDENCY GATE
 
-GO will mean readiness for **Phase 4 review only**. It does not authorize Phase 4 implementation.
+GO means readiness for **Phase 4 review only**. It does not authorize Phase 4 implementation.
 Before runtime proof, the owner must approve an isolated fixed fixture harness, exact runtime
 and dependency provenance, network/secret restrictions, CPU/memory/time/output limits, immutable
 business inputs/oracle and safe interruption/cleanup. It must independently demonstrate
@@ -407,4 +429,4 @@ arbitrary repository execution remain unauthorized. Phase 3 adds persistence, no
 
 ## M. FINAL STATUS
 
-PHASE 3 LOCAL VALIDATION PASSED — PUBLICATION AND HOSTED CI PENDING — NO PHASE 4 AUTHORIZED
+PHASE 3 COMPLETE — LOCAL POSTGRES DURABLE ANALYSIS ONLY — NO REPLAY/MODELS/CLOUD/PR WRITES — PHASE BRANCH PUSHED — AWAITING PHASE 4 REVIEW

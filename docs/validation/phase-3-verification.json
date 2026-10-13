@@ -380,9 +380,137 @@
     "tests/durable/process.test.ts"
   ],
   "publication": {
-    "status": "pending",
-    "implementationSha": null,
-    "ci": null,
+    "status": "implementation-verified; final documentation receipt checked separately",
+    "implementationSha": "eca08b149b353e55f33ce905bdef6c8187f0d510",
+    "ci": {
+      "RunId": 38430520989,
+      "HeadSha": "eca08b149b353e55f33ce905bdef6c8187f0d510",
+      "Status": "completed",
+      "Conclusion": "success",
+      "Url": "https://github.com/arslanabdulghaffar/DriftReplay/actions/runs/38430520989",
+      "Jobs": [
+        {
+          "id": 115411177225,
+          "name": "foundation",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-13T16:26:34Z",
+          "completed_at": "2026-10-13T16:28:11Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Initialize containers",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Read source without retaining checkout credentials",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Select the reviewed Node runtime",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned packages without lifecycle scripts",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Prepare isolated CI database roles",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Migrate real PostgreSQL",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify local database diagnostics",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Strict TypeScript checks",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Lint",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Formatting",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Unit and fixture tests",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Explicit fixture validation gate",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Explicit deterministic analysis and security gate",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Actual local analysis CLI",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Real PostgreSQL durability, concurrency and security gate",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Production static build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Local HTTP smoke checks",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Select the reviewed Node runtime",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Read source without retaining checkout credentials",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Stop containers",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
     "firstAttempt": {
       "sha": "97ee0d56a55a10c5d8cf0e49c71e4063adf3fb52",
       "tree": "51f0c2caa1625c41df615b7203043d62d0299f1d",
@@ -393,6 +521,24 @@
       "failedTests": 1,
       "failedTest": "CLI doctor backend address mistaken for loopback client endpoint",
       "laterGates": "skipped"
+    },
+    "tree": "c65fe5220e6aff70046d49a3fdede9f5105fff5b",
+    "verifiedFiles": 158,
+    "hostedCounts": {
+      "all": 496,
+      "allFiles": 23,
+      "fixtures": 37,
+      "analysis": 327,
+      "durable": 92,
+      "durableFiles": 9,
+      "smoke": 6,
+      "allJobStepsSucceeded": 22
+    },
+    "hostedDatabaseVersion": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "hostedDoctor": {
+      "loopbackOnlyConnection": true,
+      "serverAddressIsLoopback": false,
+      "runtimeSuperuser": false
     }
   },
   "scope": {
